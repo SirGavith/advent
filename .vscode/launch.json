@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "console": "externalTerminal",
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Real Input",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\built\\main.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "console": "externalTerminal",
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Example Input",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\built\\main.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+            "args": ["example"],
+        }
+    ]
+}
