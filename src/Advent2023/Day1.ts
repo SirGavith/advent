@@ -1,3 +1,4 @@
+import { mainModule } from "process"
 import { Data } from "../main"
 
 
@@ -5,10 +6,10 @@ import { Data } from "../main"
 
 const charDigits  = '0123456789'
 
-Data.map(l => {
-    const a = l.toArray().filter(c => charDigits.includes(c))
-    return (a[0] + a.at(-1)).toInt()
-}).Sum().Log()
+// Data.map(l => {
+//     const a = l.toArray().filter(c => charDigits.includes(c))
+//     return (a[0] + a.at(-1)).toInt()
+// }).Sum().Log()
 
 //part 2
 
@@ -83,4 +84,24 @@ Data.map(l => {
                 return map.get(a)
     }).RemoveUndefined()
     return (d.at(0)! + d.at(-1)!).toInt()
+}).Sum().Log()
+
+
+//approach 3
+const map2 = 
+{
+    'one': 'o1e',
+    'two': 't2o',
+    'three': 't3e',
+    'four': 'f4r',
+    'five': 'f5e',
+    'six': 's6x',
+    'seven': 's7n',
+    'eight': 'e8t',
+    'nine': 'n9e'
+}
+
+Data.map(l => {
+    const a = l.ReplaceMap(map2).toArray().filter(c => charDigits.includes(c))
+    return (a.at(0)! + a.at(-1)!).toInt()
 }).Sum().Log()

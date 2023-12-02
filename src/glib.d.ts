@@ -40,6 +40,7 @@ interface Array<T> {
     Max(): T
     Min(): T
     Log(): Array<T>
+    With(i: number, val: T): Array<T>
 
     IncrementOrCreate2D(val1: number, val2: number): void
     toObject(): {}

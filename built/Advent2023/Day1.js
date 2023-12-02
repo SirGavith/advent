@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("../main");
 //part 1
 const charDigits = '0123456789';
-main_1.Data.map(l => {
-    const a = l.toArray().filter(c => charDigits.includes(c));
-    return (a[0] + a.at(-1)).toInt();
-}).Sum().Log();
+// Data.map(l => {
+//     const a = l.toArray().filter(c => charDigits.includes(c))
+//     return (a[0] + a.at(-1)).toInt()
+// }).Sum().Log()
 //part 2
 const map = new Map([
     ['one', '1'],
@@ -74,4 +74,20 @@ main_1.Data.map(l => {
                 return map.get(a);
     }).RemoveUndefined();
     return (d.at(0) + d.at(-1)).toInt();
+}).Sum().Log();
+//approach 3
+const map2 = {
+    'one': 'o1e',
+    'two': 't2o',
+    'three': 't3e',
+    'four': 'f4r',
+    'five': 'f5e',
+    'six': 's6x',
+    'seven': 's7n',
+    'eight': 'e8t',
+    'nine': 'n9e'
+};
+main_1.Data.map(l => {
+    const a = l.ReplaceMap(map2).toArray().filter(c => charDigits.includes(c));
+    return (a.at(0) + a.at(-1)).toInt();
 }).Sum().Log();

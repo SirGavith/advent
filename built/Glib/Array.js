@@ -231,6 +231,11 @@ Array.prototype.Log = function () {
     console.log(this);
     return this;
 };
+Array.prototype.With = function (i, val) {
+    const arr = this.CopyFast();
+    arr.set(i, val);
+    return arr;
+};
 Array.prototype.Sum = function () {
     return this.reduce((p, c) => p + c);
 };

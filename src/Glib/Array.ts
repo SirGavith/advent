@@ -45,6 +45,7 @@ interface Array<T> {
     Max(): T
     Min(): T
     Log(): Array<T>
+    With(i: number, val: T): Array<T>
 
     IncrementOrCreate2D(val1: number, val2: number): void
     toObject(): {}
@@ -285,6 +286,11 @@ Array.prototype.Min = function() {
 Array.prototype.Log = function() {
     console.log(this)
     return this
+}
+Array.prototype.With = function(i, val) {
+    const arr = this.CopyFast()
+    arr.set(i, val)
+    return arr
 }
 
 type numericals = number | bigint
