@@ -204,6 +204,15 @@ class Array2D {
             }
         }
     }
+    reduce(lambda, reducer) {
+        for (let y = 0; y < this.Array.length; y++) {
+            for (let x = 0; x < this.Array[y]?.length; x++) {
+                let xy = new XY(x, y);
+                reducer = lambda(reducer, this.get(xy), xy, this);
+            }
+        }
+        return reducer;
+    }
     every(lambda) {
         for (let y = 0; y < this.Array.length; y++) {
             for (let x = 0; x < this.Array[y]?.length; x++) {

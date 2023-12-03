@@ -231,6 +231,16 @@ export class Array2D<T> {
         }
     }
 
+    reduce<U>(lambda: (reducer: U, value: T | undefined, index: XY, array: this) => U, reducer: U) {
+        for (let y = 0; y < this.Array.length; y++) {
+            for (let x = 0; x < this.Array[y]?.length; x++) {
+                let xy = new XY(x, y)
+                reducer = lambda(reducer, this.get(xy), xy, this)
+            }
+        }
+        return reducer
+    }
+
     every(lambda: (value: T | undefined, index: XY, array: this) => boolean): boolean {
         for (let y = 0; y < this.Array.length; y++) {
             for (let x = 0; x < this.Array[y]?.length; x++) {
