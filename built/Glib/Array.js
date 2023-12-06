@@ -257,6 +257,13 @@ Array.prototype.IncrementOrCreate2D = function (val1, val2) {
         this[val1][val2] = 1;
     }
 };
+Array.prototype.Transpose2D = function () {
+    // this = [[a,b],[c,d]]
+    const arr = [];
+    for (let i = 0; i < this[0].length; i++)
+        arr.push(this.map(e => e[i]));
+    return arr;
+};
 Array.prototype.toObject = function () {
     return Object.fromEntries(this);
 };

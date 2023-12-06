@@ -43,6 +43,7 @@ interface Array<T> {
     With(i: number, val: T): Array<T>
 
     IncrementOrCreate2D(val1: number, val2: number): void
+    Transpose2D(): Array<T>
     toObject(): {}
 
     //Number
@@ -54,6 +55,8 @@ interface Array<T> {
     //String
     toIntArray(radix?: number): number[]
 }
+
+
 interface Boolean {
     IsTrue(action: () => void): void;
     IsFalse(action: () => void): void;
