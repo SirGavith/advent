@@ -23,7 +23,7 @@ interface Array<T> {
     ReduceAccumulate(lambda: (prev: T, val: T, index: number, a: T[]) => number): number
     FillEmpty(value: T, pad?: number): Array<T>
     Count(predicate?: (value: T, index: number, array: T[]) => boolean): number
-    IncrementOrCreate(index: number, value?: number): void
+    IncrementOrCreate(index: number, value?: number): Array<T>
     // BinarySearch(search: (value: T, index: number) => boolean): T
     Permutations(): T[][]
     Frequency(val: T): number

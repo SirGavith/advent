@@ -154,6 +154,7 @@ Array.prototype.IncrementOrCreate = function (index, value = 1) {
         this[index] += value;
     else
         this[index] = value;
+    return this;
 };
 // Array.prototype.BinarySearch = function<T>(search: (value: T, index: number) => boolean) {
 //     let index = this.length / 2,

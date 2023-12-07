@@ -28,7 +28,7 @@ interface Array<T> {
     ReduceAccumulate(lambda: (prev: T, val: T, index: number, a: T[]) => number): number
     FillEmpty(value: T, pad?: number): Array<T>
     Count(predicate?: (value: T, index: number, array: T[]) => boolean): number
-    IncrementOrCreate (index: number, value?: number): void
+    IncrementOrCreate (index: number, value?: number): Array<T>
     // BinarySearch(search: (value: T, index: number) => boolean): T
     Permutations(): T[][]
     Frequency(val: T): number
@@ -207,6 +207,7 @@ Array.prototype.Count = function(predicate?: (value: any, index: number, array: 
 Array.prototype.IncrementOrCreate = function(index: number, value = 1) {
     if (this[index]) this[index] += value
     else this[index] = value
+    return this
 }
 // Array.prototype.BinarySearch = function<T>(search: (value: T, index: number) => boolean) {
 //     let index = this.length / 2,
