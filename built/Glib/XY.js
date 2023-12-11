@@ -240,6 +240,17 @@ class Array2D {
         this.forEach((val, xy) => arr.set(xy, lambda(val, xy, this)));
         return arr;
     }
+    Find(element) {
+        for (let y = 0; y < this.Array.length; y++) {
+            for (let x = 0; x < this.Array[y]?.length; x++) {
+                let xy = new XY(x, y);
+                if (this.get(xy) === element) {
+                    return xy;
+                }
+            }
+        }
+        return undefined;
+    }
     Flatten() {
         let l = [];
         this.forEach(tile => {

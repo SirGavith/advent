@@ -56,3 +56,4 @@ currentNodes.map(n => {
     factors.Log();
     return factors;
 }).Uniques().Log().Product().Log();
+// 15726453850399
