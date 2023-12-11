@@ -27,7 +27,7 @@ XY_1.Array2D.fromArray(main_1.Data.map(r => r.toArray())).forEach((val, xy, a) =
                         break;
                 }
                 // console.log(n, i, j)
-                const str = row.slice(i, j).join('');
+                const str = row.slice(i, j).join('').Log();
                 if (str !== '')
                     sum += str.toInt();
                 for (let k = i; k < j; k++) {
@@ -39,24 +39,21 @@ XY_1.Array2D.fromArray(main_1.Data.map(r => r.toArray())).forEach((val, xy, a) =
 });
 sum.Log();
 //part 2
-XY_1.Array2D.fromArray(main_1.Data.map(r => r.toArray())).reduce((sum, val, xy, a) => {
-    if (val !== '*')
-        return sum;
-    const adjacents = [];
-    a.Neighbours(xy, true).forEach(([nxy, n]) => {
-        if (n === '.')
-            return;
-        //find whole number and replace with .
-        const row = a.getRow(nxy.Y);
-        let i = nxy.X, j = nxy.X;
-        while (i >= 0 && row.at(i - 1)?.in(digits))
-            i--;
-        while (j < row.length && row.at(j)?.in(digits))
-            j++;
-        if (i !== j)
-            adjacents.push(row.slice(i, j).join('').toInt());
-        for (let k = i; k < j; k++)
-            a.set(new XY_1.XY(k, nxy.Y), '.');
-    });
-    return sum + (adjacents.length === 2 ? adjacents.Product() : 0);
-}, 0).Log();
+// Array2D.fromArray(Data.map(r => r.toArray())).reduce((sum, val, xy, a) => {
+//     if (val !== '*') return sum
+//     const adjacents: number[] = []
+//     a.Neighbours(xy, true).forEach(([nxy, n]) => {
+//         if (n === '.') return
+//         //find whole number and replace with .
+//         const row = a.getRow(nxy.Y)
+//         let i = nxy.X,
+//             j = nxy.X
+//         while (i >= 0 && row.at(i - 1)?.in(digits)) i--
+//         while (j < row.length && row.at(j)?.in(digits)) j++
+//         if (i !== j)
+//             adjacents.push(row.slice(i, j).join('').toInt())
+//         for (let k = i; k < j; k++) 
+//             a.set(new XY(k, nxy.Y), '.')
+//     })
+//     return sum + (adjacents.length === 2 ? adjacents.Product() : 0)
+// }, 0).Log()

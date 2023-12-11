@@ -6,50 +6,34 @@ const arr = Array2D.fromArray(Data.map(l => l.toArray()))
 const origin = arr.Find('S')!.Log()
 
 const path = [origin]
-let offset = undefined
 
-if (arr.get(origin.plus(1, 0))?.in('J-7')) {
-    //go right
-    offset = XY.Right
-} else if (arr.get(origin.plus(-1, 0))?.in('L-F')) {
-    //go left
-    offset = XY.Left    
-} else if (arr.get(origin.plus(0, 1))?.in('L|J')) {
-    //go down
-    offset = XY.Up
-} else {
-    throw new Error //should find two
-}
-
+let offset = XY.Right
 path.push(origin.plus(offset))
 
-path.Log()
-
-
-
-for (let i = 1; ; i++) {
+while (true) {
     const current = path.at(-1)!
+    if (arr.get(current) === 'S') break
 
-    if (arr.get(current) === '|') {
-
-        if ()
-
+    switch (arr.get(current)) {
+        case 'L':
+            if (offset.EQ(XY.Up))        offset = XY.Right
+            else if (offset.EQ(XY.Left)) offset = XY.Down
+            break
+        case 'J':
+            if (offset.EQ(XY.Up))         offset = XY.Left
+            else if (offset.EQ(XY.Right)) offset = XY.Down
+            break
+        case '7':
+            if (offset.EQ(XY.Down))       offset = XY.Left
+            else if (offset.EQ(XY.Right)) offset = XY.Up
+            break
+        case 'F':
+            if (offset.EQ(XY.Down))       offset = XY.Right
+            else if (offset.EQ(XY.Left))  offset = XY.Up
+            break
     }
-
-
-
-    if (arr.get(current.plus(1, 0))?.in('J-7')) {
-        //go right
-        offset = XY.Right
-    } else if (arr.get(current.plus(-1, 0))?.in('L-F')) {
-        //go left
-        offset = XY.Left
-    } else if (arr.get(current.plus(0, 1))?.in('L|J')) {
-        //go down
-        offset = XY.Up
-    } else {
-        throw new Error //should find two
-    }
-
-
+    path.push(current.plus(offset))
 }
+
+path.Log();
+((path.length - 1) / 2).Log()

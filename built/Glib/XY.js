@@ -151,6 +151,10 @@ class XY {
     static Down = new XY(0, -1);
     static Right = new XY(1, 0);
     static Left = new XY(-1, 0);
+    static UpLeft = new XY(-1, 1);
+    static UpRight = new XY(1, 1);
+    static DownLeft = new XY(-1, -1);
+    static DownRight = new XY(-1, -1);
     Log() {
         console.log('XY:', this.X, this.Y);
         return this;
