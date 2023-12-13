@@ -317,8 +317,8 @@ class Array2D {
     SuperimposeOverlap(arr, offset) {
         return arr.some((val, xy) => val === true && val === this.get(xy.plus(offset)));
     }
-    Rotate() {
-        const arr = new Array2D(this.Size);
+    Transpose() {
+        const arr = new Array2D(new XY(this.Size.Y, this.Size.X));
         this.forEach((v, xy) => {
             arr.set(new XY(xy.Y, xy.X), v);
         });

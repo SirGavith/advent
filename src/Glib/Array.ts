@@ -89,7 +89,7 @@ Array.prototype.forEachPair = function(action: (value: any[], index: number[]) =
     const pairs: string[] = []
     this.forEach((val, i) => {
         this.forEach((val2, ii) => {
-            if (allowDoubles ||  i != ii) {
+            if (allowDoubles ||  i !== ii) {
                 const svals = [val, val2].sort((a, b) => a - b).toString()
                 if (allowDuplicates || !pairs.includes(svals)) action([val, val2], [i, ii])
                 pairs.push(svals)

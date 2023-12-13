@@ -371,8 +371,8 @@ export class Array2D<T> {
         )
     }
 
-    Rotate(): Array2D<T | undefined> {
-        const arr = new Array2D<T>(this.Size)
+    Transpose(): Array2D<T> {
+        const arr = new Array2D<T>(new XY(this.Size.Y, this.Size.X))
         this.forEach((v, xy) => {
             arr.set(new XY(xy.Y, xy.X), v)
         })
