@@ -306,7 +306,7 @@ export class Array2D<T> {
             console.log('| ' + 
                 // i?.toString().padStart(5) + ' ' +
                 row.map(v => (
-                    v === undefined ? ' ' :
+                    v === undefined ? '.' :
                     v as unknown as boolean === true ? '#' :
                     v as unknown as boolean === false ? '.' :
                     typeof v === "number" && v === Infinity ? '∞' : String(v)

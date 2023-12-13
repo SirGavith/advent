@@ -270,7 +270,7 @@ class Array2D {
         this.Array.forEach((row, i) => {
             console.log('| ' +
                 // i?.toString().padStart(5) + ' ' +
-                row.map(v => (v === undefined ? ' ' :
+                row.map(v => (v === undefined ? '.' :
                     v === true ? '#' :
                         v === false ? '.' :
                             typeof v === "number" && v === Infinity ? '∞' : String(v)).padStart(1)).join(''));
