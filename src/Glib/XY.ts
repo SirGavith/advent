@@ -204,11 +204,11 @@ export class Array2D<T> {
 
     private cols: Array<T | undefined>[] = []
     getCol(x: number): Array<T | undefined> {
-        return this.Array.map(row => row[x])
+        // return this.Array.map(row => row[x])
 
-        // if (this.cols[x] === undefined) 
-        //     this.cols[x] = this.Array.map(row => row[x])
-        // return this.cols[x]
+        if (this.cols[x] === undefined) 
+            this.cols[x] = this.Array.map(row => row[x])
+        return this.cols[x]
     }
 
     set(xy:XY, value: T | undefined) {
@@ -384,6 +384,20 @@ export class Array2D<T> {
             throw new RangeError('Array must be rectangular')
 
         const out = new Array2D<T>(size ?? new XY(arr[0].length, arr.length))
+        arr.forEach((row, y) => {
+            row.forEach((tile, x) => {
+                out.set(new XY(x, y), tile)
+            })
+        })
+        return out
+    }
+
+    static fromString(a: string, size?: XY) {
+        const arr = a.SplitLines()
+        if (size === undefined && arr.some(row => row.length !== arr[0].length))
+            throw new RangeError('Array must be rectangular')
+
+        const out = new Array2D<string>(size ?? new XY(arr[0].length, arr.length))
         arr.forEach((row, y) => {
             row.forEach((tile, x) => {
                 out.set(new XY(x, y), tile)

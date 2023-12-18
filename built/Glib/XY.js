@@ -181,10 +181,10 @@ class Array2D {
     }
     cols = [];
     getCol(x) {
-        return this.Array.map(row => row[x]);
-        // if (this.cols[x] === undefined) 
-        //     this.cols[x] = this.Array.map(row => row[x])
-        // return this.cols[x]
+        // return this.Array.map(row => row[x])
+        if (this.cols[x] === undefined)
+            this.cols[x] = this.Array.map(row => row[x]);
+        return this.cols[x];
     }
     set(xy, value) {
         if (this.Checked && !xy.WithinArea(XY.Zero, this.Size.minus(1)))
@@ -325,6 +325,18 @@ class Array2D {
         return arr;
     }
     static fromArray(arr, size) {
+        if (size === undefined && arr.some(row => row.length !== arr[0].length))
+            throw new RangeError('Array must be rectangular');
+        const out = new Array2D(size ?? new XY(arr[0].length, arr.length));
+        arr.forEach((row, y) => {
+            row.forEach((tile, x) => {
+                out.set(new XY(x, y), tile);
+            });
+        });
+        return out;
+    }
+    static fromString(a, size) {
+        const arr = a.SplitLines();
         if (size === undefined && arr.some(row => row.length !== arr[0].length))
             throw new RangeError('Array must be rectangular');
         const out = new Array2D(size ?? new XY(arr[0].length, arr.length));

@@ -104,6 +104,9 @@ function forEachRecursive(array, times, action, values = [], indices = []) {
         });
     }
 }
+Array.prototype.Run = function (l1, l2) {
+    return [l1(this[0]), l2(this[1])];
+};
 Array.prototype.ReduceAccumulate = function (lambda) {
     let acc = 0;
     this.reduce((prev, val, i, a) => (acc += lambda(prev, val, i, a), val));

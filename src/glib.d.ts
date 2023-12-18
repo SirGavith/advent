@@ -36,17 +36,18 @@ interface Array<T> {
     RemoveUndefined(): NonNullable<T>[]
     WithIndices(): [T, number][]
     Indices(): number[]
-    Median(): T
-    Max(): T
-    Min(): T
     Log(): Array<T>
     With(i: number, val: T): Array<T>
-
+    
     IncrementOrCreate2D(val1: number, val2: number): void
     Transpose2D(): Array<T>
     toObject(): {}
+    Run<U1,U2>(l1: (value: T) => U1, l2: (value: T) => U2): [U1, U2]
 
     //Number
+    Median(): T
+    Max(): T
+    Min(): T
     Sum(): T
     Product(): T
     toInt(radix?: number): number
