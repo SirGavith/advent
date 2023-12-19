@@ -2,7 +2,7 @@ import { Array2D, XY } from "../Glib/XY";
 import { DataFull } from "../main";
 
 let arrO = Array2D.fromString(DataFull).Log()
-const arr = Array2D.fromString(DataFull).Log()7
+const arr = Array2D.fromString(DataFull).Log()
 
 
 

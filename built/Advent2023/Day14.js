@@ -4,7 +4,6 @@ const XY_1 = require("../Glib/XY");
 const main_1 = require("../main");
 let arrO = XY_1.Array2D.fromString(main_1.DataFull).Log();
 const arr = XY_1.Array2D.fromString(main_1.DataFull).Log();
-7;
 const tilt = (x, y, dir) => {
     let xy = new XY_1.XY(x, y);
     if (arr.get(xy) !== 'O')
