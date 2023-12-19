@@ -26,28 +26,28 @@ export class XY {
         const xy = XY.parseInput(n, n2)
         return new XY(this.X + xy.X, this.Y + xy.Y)
     }
-    plusEQ(n: nXY, n2?: number) { this.set(this.plus(n, n2)) }
+    plusEQ(n: nXY, n2?: number) { this.set(this.plus(n, n2))}
 
     minus(n: nXY, n2?: number) {
         const xy = XY.parseInput(n, n2)
         return new XY(this.X - xy.X, this.Y - xy.Y)
     }
-    minusEQ(n: nXY, n2?: number) { this.set(this.minus(n, n2)) }
+    minusEQ(n: nXY, n2?: number) { this.set(this.minus(n, n2))}
     times(n: nXY, n2?: number) {
         const xy = XY.parseInput(n, n2)
         return new XY(this.X * xy.X, this.Y * xy.Y)
     }
-    timesEQ(n: nXY, n2?: number) { this.set(this.times(n, n2)) }
+    timesEQ(n: nXY, n2?: number) { this.set(this.times(n, n2))}
     div(n: nXY, n2?: number) {
         const xy = XY.parseInput(n, n2)
         return new XY(this.X / xy.X, this.Y / xy.Y)
     }
-    divEQ(n: nXY, n2?: number) { this.set(this.div(n, n2)) }
+    divEQ(n: nXY, n2?: number) { this.set(this.div(n, n2))}
     mod(n: nXY, n2?: number) {
         const xy = XY.parseInput(n, n2)
         return new XY(this.X % xy.X, this.Y % xy.Y)
     }
-    modEQ(n: nXY, n2?: number) { this.set(this.mod(n, n2)) }
+    modEQ(n: nXY, n2?: number) { this.set(this.mod(n, n2))}
 
 
     EQ(xy: XY) { return xy.X === this.X && xy.Y === this.Y }
