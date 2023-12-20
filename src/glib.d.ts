@@ -87,7 +87,7 @@ interface Object {
     Log(): {};
 }
 interface String {
-    toIntList(radix?: number, delim?: string): number[];
+    toIntList(delim?: string, radix?: number): number[];
     toFloatList(delim?: string): number[];
     toInt(radix?: number): number;
     toFloat(radix?: number): number;

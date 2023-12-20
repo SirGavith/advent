@@ -4,10 +4,10 @@ import { Data, DataFull } from "../main";
 
 //part 1
 const steps1 = DataFull.Split2Lines().slice(1)
-Data[0].slice(7).toIntList(10, ' ')
+Data[0].slice(7).toIntList(' ')
     .map((seed) => {
         steps1.forEach(s => {
-            const step = s.SplitLines().slice(1).map(r =>r.toIntList(10, ' ') as [number, number, number])
+            const step = s.SplitLines().slice(1).map(r =>r.toIntList(' ') as [number, number, number])
             step.ForEach(r => {
                 if (seed >= r[1] && seed < r[1] + r[2]) {
                     seed += r[0] - r[1]
@@ -24,7 +24,7 @@ Data[0].slice(7).toIntList(10, ' ')
 // [INCLUSIVE, EXCLUSIVE]
 
 const mappings = DataFull.Split2Lines().slice(1).map(s => 
-    s.SplitLines().slice(1).map(r => r.toIntList(10, ' ') as [number, number, number])
+    s.SplitLines().slice(1).map(r => r.toIntList(' ') as [number, number, number])
         .map(r => 
             [r[1], r[1]+r[2], r[0]-r[1]] as n3 //rangeLo, rangeHi, offset
     ).sort((a,b) => a[0] - b[0])
@@ -32,7 +32,7 @@ const mappings = DataFull.Split2Lines().slice(1).map(s =>
 
 let ranges = []
 
-const a = Data[0].slice(7).toIntList(10, ' ')
+const a = Data[0].slice(7).toIntList(' ')
 for (let i = 0; i < a.length; i+=2)
     ranges.push([a[i], a[i] + a[i+1]] as n2)
 

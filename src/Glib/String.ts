@@ -1,7 +1,7 @@
 import * as Console from "./Console"
 
 interface String {
-    toIntList(radix?: number, delim?: string): number[]
+    toIntList(delim?: string, radix?: number): number[]
     toFloatList(delim?: string): number[]
     toInt(radix?: number): number
     toFloat(radix?: number): number
@@ -21,7 +21,7 @@ interface String {
 String.prototype.forEach = function(lambda: (val: string, index: number) => void) {
     this.toArray().forEach((v, i) => lambda(v, i))
 }
-String.prototype.toIntList = function(radix?: number, delim = '\n') {
+String.prototype.toIntList = function(delim = '\n', radix?: number) {
     return this.split(delim).map(n => parseInt(n.trim(), radix))
 }
 String.prototype.toFloatList = function(delim = '\n') {

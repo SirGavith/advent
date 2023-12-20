@@ -158,7 +158,7 @@ export class XY {
     }
 
     static fromString(s: string) {
-        return new XY(...s.toIntList(10, ',') as [number, number])
+        return new XY(...s.toIntList(',') as [number, number])
     }
 
     static fromTuple(t: [number, number]) {

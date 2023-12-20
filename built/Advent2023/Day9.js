@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const main_1 = require("../main");
 main_1.Data.map(hist => {
-    const o = hist.toIntList(10, ' ');
+    const o = hist.toIntList(' ');
     const t = [o];
     while (!t.at(-1)?.every(n => n === 0)) {
         const s = t.at(-1);
@@ -21,7 +21,7 @@ main_1.Data.map(hist => {
 }).Log().Sum().Log();
 //1877825184
 main_1.Data.map(hist => {
-    const o = hist.toIntList(10, ' ');
+    const o = hist.toIntList(' ');
     const t = [o];
     while (!t.at(-1)?.every(n => n === 0)) {
         const s = t.at(-1);

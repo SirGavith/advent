@@ -27,7 +27,7 @@ const Console = __importStar(require("./Console"));
 String.prototype.forEach = function (lambda) {
     this.toArray().forEach((v, i) => lambda(v, i));
 };
-String.prototype.toIntList = function (radix, delim = '\n') {
+String.prototype.toIntList = function (delim = '\n', radix) {
     return this.split(delim).map(n => parseInt(n.trim(), radix));
 };
 String.prototype.toFloatList = function (delim = '\n') {

@@ -1,7 +1,7 @@
 import { Data } from "../main";
 
 Data.map(hist => {
-    const o = hist.toIntList(10,' ')
+    const o = hist.toIntList(' ')
     const t = [o]
     while (!t.at(-1)?.every(n => n === 0)) {
         const s = t.at(-1)!
@@ -26,7 +26,7 @@ Data.map(hist => {
 //1877825184
 
 Data.map(hist => {
-    const o = hist.toIntList(10, ' ')
+    const o = hist.toIntList(' ')
     const t = [o]
     while (!t.at(-1)?.every(n => n === 0)) {
         const s = t.at(-1)!

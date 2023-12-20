@@ -140,7 +140,7 @@ class XY {
         return a.map(xy => `(${xy.toString()})`).join(', ');
     }
     static fromString(s) {
-        return new XY(...s.toIntList(10, ','));
+        return new XY(...s.toIntList(','));
     }
     static fromTuple(t) {
         return new XY(t[0], t[1]);
