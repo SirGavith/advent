@@ -18,6 +18,24 @@ const energized = (init: [/*pos*/ XY, /*dir*/ XY]) => {
         if (arr.get(pos) === '.') {
             stack.push([pos.plus(dir), dir])
         }
+        else if (arr.get(pos) === '/') {
+            let nDir = null
+            if (dir === XY.Down) nDir = XY.Right
+            else if (dir === XY.Left) nDir = XY.Up
+            else if (dir === XY.Up) nDir = XY.Left
+            else if (dir === XY.Right) nDir = XY.Down
+
+            stack.push([pos.plus(nDir!), nDir!])
+        }
+        else if (arr.get(pos) === '\\') {
+            let nDir = null
+            if (dir === XY.Down) nDir = XY.Left
+            else if (dir === XY.Left) nDir = XY.Down
+            else if (dir === XY.Up) nDir = XY.Right
+            else if (dir === XY.Right) nDir = XY.Up
+
+            stack.push([pos.plus(nDir!), nDir!])
+        }
         else if (arr.get(pos) === '-') {
             if (dir === XY.Right || dir === XY.Left)
                 stack.push([pos.plus(dir), dir])
@@ -33,24 +51,6 @@ const energized = (init: [/*pos*/ XY, /*dir*/ XY]) => {
                 stack.push([pos.plus(XY.Down), XY.Down])
                 stack.push([pos.plus(XY.Up), XY.Up])
             }
-        }
-        else if (arr.get(pos) === '/') {
-            let nDir = null
-                if (dir === XY.Down) nDir = XY.Right
-            else if (dir === XY.Left) nDir = XY.Up
-            else if (dir === XY.Up) nDir = XY.Left
-            else if (dir === XY.Right) nDir = XY.Down
-            
-            stack.push([pos.plus(nDir!), nDir!])
-        }
-        else if (arr.get(pos) === '\\') {
-            let nDir = null
-            if (dir === XY.Down) nDir = XY.Left
-            else if (dir === XY.Left) nDir = XY.Down
-            else if (dir === XY.Up) nDir = XY.Right
-            else if (dir === XY.Right) nDir = XY.Up
-
-            stack.push([pos.plus(nDir!), nDir!])
         }
     }
 

@@ -16,22 +16,6 @@ const energized = (init) => {
         if (arr.get(pos) === '.') {
             stack.push([pos.plus(dir), dir]);
         }
-        else if (arr.get(pos) === '-') {
-            if (dir === XY_1.XY.Right || dir === XY_1.XY.Left)
-                stack.push([pos.plus(dir), dir]);
-            else {
-                stack.push([pos.plus(XY_1.XY.Right), XY_1.XY.Right]);
-                stack.push([pos.plus(XY_1.XY.Left), XY_1.XY.Left]);
-            }
-        }
-        else if (arr.get(pos) === '|') {
-            if (dir === XY_1.XY.Up || dir === XY_1.XY.Down)
-                stack.push([pos.plus(dir), dir]);
-            else {
-                stack.push([pos.plus(XY_1.XY.Down), XY_1.XY.Down]);
-                stack.push([pos.plus(XY_1.XY.Up), XY_1.XY.Up]);
-            }
-        }
         else if (arr.get(pos) === '/') {
             let nDir = null;
             if (dir === XY_1.XY.Down)
@@ -55,6 +39,22 @@ const energized = (init) => {
             else if (dir === XY_1.XY.Right)
                 nDir = XY_1.XY.Up;
             stack.push([pos.plus(nDir), nDir]);
+        }
+        else if (arr.get(pos) === '-') {
+            if (dir === XY_1.XY.Right || dir === XY_1.XY.Left)
+                stack.push([pos.plus(dir), dir]);
+            else {
+                stack.push([pos.plus(XY_1.XY.Right), XY_1.XY.Right]);
+                stack.push([pos.plus(XY_1.XY.Left), XY_1.XY.Left]);
+            }
+        }
+        else if (arr.get(pos) === '|') {
+            if (dir === XY_1.XY.Up || dir === XY_1.XY.Down)
+                stack.push([pos.plus(dir), dir]);
+            else {
+                stack.push([pos.plus(XY_1.XY.Down), XY_1.XY.Down]);
+                stack.push([pos.plus(XY_1.XY.Up), XY_1.XY.Up]);
+            }
         }
     }
     const e = arr3.reduce((sum, v) => sum + (v.size > 0 ? 1 : 0), 0);
