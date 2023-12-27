@@ -1,25 +1,23 @@
 import { Array2D, XY } from "../Glib/XY";
 import * as Console from "../Glib/Console";
 import { DataFull } from "../main";
-import { n3 } from "../Glib/Array";
+import { n3, n9 } from "../Glib/Array";
 
 const arr = Array2D.fromString(DataFull)
 
+const h = Array(9).fill(Number.MAX_VALUE) as n9
+
 const minHeats = arr.map(_ => ({
-    // heats: {
-        '0,1': [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE]  as n3,
-        '1,0': [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE]  as n3,
-        '0,-1': [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE] as n3,
-        '-1,0': [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE] as n3,
-    // }
+    '0,1': h.CopyFast(),
+    '1,0': h.CopyFast(),
+    '0,-1': h.CopyFast(),
+    '-1,0': h.CopyFast(),
 }))
 minHeats.set(XY.Zero, {
-    // heats: {
-        '0,1': [0, 0, 0],
-        '1,0': [0, 0, 0],
-        '0,-1': [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE],
-        '-1,0': [Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE],
-    // }
+    '0,1': [0, 0, 0],
+    '1,0': [0, 0, 0],
+    '0,-1': h.CopyFast(),
+    '-1,0': h.CopyFast(),
 })
 
 arr.set(XY.Zero, '0')
@@ -28,9 +26,11 @@ const stack = [{
     pos: XY.Zero,
     minHeat: 0,
     dir: XY.Zero,
-    length: 5,
+    length: 20,
     path: [] as XY[]
 }]
+
+//took 5 min to run part 2 but good enough :)
 
 while(stack.length > 0) {
     //find least-valued leaf
@@ -38,16 +38,15 @@ while(stack.length > 0) {
     const addHeat = arr.get(node.pos)?.toInt()
     if (addHeat === undefined) continue
 
-    if (node.length !== 5) {
+    //if not starting node
+    if (node.length !== 20) {
 
         const heats = minHeats.get(node.pos)
         const d = node.dir.toString() as '0,1' | '1,0' | '0,-1' | '-1,0'
         //set visited & min heat
         if (heats![d][node.length] < Number.MAX_SAFE_INTEGER) continue
-
         if (heats![d][node.length] > node.minHeat) {
-            for (let i = node.length; i < 3; i++)
-                heats![d][i] = node.minHeat
+            heats![d][node.length] = node.minHeat
         }
     }
 
@@ -64,7 +63,7 @@ while(stack.length > 0) {
     }
 
     //STRAIGHT
-    if (node.length < 2) {
+    if (node.length < 9) {
         stack.push({
             pos: node.pos.plus(node.dir),
             minHeat: node.minHeat + addHeat,
@@ -73,41 +72,42 @@ while(stack.length > 0) {
             path: node.path.CopyFast().Push(node.pos)
         })
     }
-
     //TURNS
-    if (node.dir !== XY.Right && node.dir !== XY.Left) {
-        stack.push({
-            pos: node.pos.plus(XY.Right),
-            minHeat: node.minHeat + addHeat,
-            dir: XY.Right,
-            length: 0,
-            path: node.path.CopyFast().Push(node.pos)
+    if (node.length >= 3) {
+        if (node.dir !== XY.Right && node.dir !== XY.Left) {
+            stack.push({
+                pos: node.pos.plus(XY.Right),
+                minHeat: node.minHeat + addHeat,
+                dir: XY.Right,
+                length: 0,
+                path: node.path.CopyFast().Push(node.pos)
 
-        })
-        stack.push({
-            pos: node.pos.plus(XY.Left),
-            minHeat: node.minHeat + addHeat,
-            dir: XY.Left,
-            length: 0,
-            path: node.path.CopyFast().Push(node.pos)
+            })
+            stack.push({
+                pos: node.pos.plus(XY.Left),
+                minHeat: node.minHeat + addHeat,
+                dir: XY.Left,
+                length: 0,
+                path: node.path.CopyFast().Push(node.pos)
 
-        })
-    }
-    if (node.dir !== XY.Up && node.dir !== XY.Down) {
-        stack.push({
-            pos: node.pos.plus(XY.Up),
-            minHeat: node.minHeat + addHeat,
-            dir: XY.Up,
-            length: 0,
-            path: node.path.CopyFast().Push(node.pos)
-        })
-        stack.push({
-            pos: node.pos.plus(XY.Down),
-            minHeat: node.minHeat + addHeat,
-            dir: XY.Down,
-            length: 0,
-            path: node.path.CopyFast().Push(node.pos)
-        })
+            })
+        }
+        if (node.dir !== XY.Up && node.dir !== XY.Down) {
+            stack.push({
+                pos: node.pos.plus(XY.Up),
+                minHeat: node.minHeat + addHeat,
+                dir: XY.Up,
+                length: 0,
+                path: node.path.CopyFast().Push(node.pos)
+            })
+            stack.push({
+                pos: node.pos.plus(XY.Down),
+                minHeat: node.minHeat + addHeat,
+                dir: XY.Down,
+                length: 0,
+                path: node.path.CopyFast().Push(node.pos)
+            })
+        }
     }
 
     stack.sort((a, b) => b.minHeat - a.minHeat)
