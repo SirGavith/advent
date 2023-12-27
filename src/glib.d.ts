@@ -42,7 +42,8 @@ interface Array<T> {
     IncrementOrCreate2D(val1: number, val2: number): void
     Transpose2D(): Array<T>
     toObject(): {}
-    Run<U1,U2>(l1: (value: T) => U1, l2: (value: T) => U2): [U1, U2]
+    Run<U1, U2>(l1: (value: T) => U1, l2: (value: T) => U2): [U1, U2]
+    Run<U1, U2, U3>(l1: (value: T) => U1, l2: (value: T) => U2, l3: (value: T) => U3): [U1, U2, U3]
 
     //Number
     Median(): T

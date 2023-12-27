@@ -59,6 +59,28 @@ class XY {
     Reverse() { return new XY(this.Y, this.X); }
     Negate() { return new XY().minus(this); }
     DeZero() { return new XY(this.X === 0 ? 1 : this.X, this.Y === 0 ? 1 : this.Y); }
+    RotateCW() {
+        if (this === XY.Right)
+            return XY.Down;
+        if (this === XY.Up)
+            return XY.Right;
+        if (this === XY.Left)
+            return XY.Up;
+        if (this === XY.Down)
+            return XY.Left;
+        throw new Error('not implemented');
+    }
+    RotateCCW() {
+        if (this === XY.Right)
+            return XY.Up;
+        if (this === XY.Up)
+            return XY.Left;
+        if (this === XY.Left)
+            return XY.Down;
+        if (this === XY.Down)
+            return XY.Right;
+        throw new Error('not implemented');
+    }
     get Least() { return this.X > this.Y ? this.Y : this.X; }
     get Greatest() { return this.X < this.Y ? this.Y : this.X; }
     get LeastAbs() { return Math.abs(this.X) > Math.abs(this.Y) ? this.Y : this.X; }

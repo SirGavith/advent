@@ -26,7 +26,7 @@ interface Array<T> {
      in each iteration, it filters the list by the filter */
     ReduceFilter(filter: (value: T, index: number, array: T[]) => boolean): T
     ReduceAccumulate(lambda: (prev: T, val: T, index: number, a: T[]) => number): number
-    Run(...lambdas: ((value: T) => void)[]): T[]
+    // Run(...lambdas: ((value: T) => void)[]): T[]
     FillEmpty(value: T, pad?: number): Array<T>
     Count(predicate?: (value: T, index: number, array: T[]) => boolean): number
     IncrementOrCreate (index: number, value?: number): Array<T>
@@ -155,8 +155,9 @@ function forEachRecursive(array: any[], times: number, action: (values: any[], i
         });
     }
 }
-Array.prototype.Run = function <T, U1, U2>(l1: (value: T) => U1, l2: (value: T) => U2): [U1, U2] {
-    return [l1(this[0]),l2(this[1])]
+Array.prototype.Run = function <U1, U2, U3>(...lambdas: ((value: any) => any)[]) {
+    return lambdas.map((l,i) => l(this[i] ?? this[0]))
+    // return [l1(this[0]),l2(this[1])]
 }
 Array.prototype.ReduceAccumulate = function(lambda: (prev: any, val: any, index: number, a: any[]) => number) {
     let acc = 0
