@@ -20,13 +20,14 @@ const tilt = (x, y, dir) => {
 //first run loop indefinitely to find period with O = example ? 10 : 1000, loops so rocks have 'settled'
 //then run to  I = 1000000000 % p + p * a; where a is large enough such that I > O
 //ex: loop period = 7
+//real: loop period = 17
 for (let i = 0; i < 7 + 17 * 60; i++) {
     //NORTH, WEST
     for (const dir of [XY_1.XY.Down, XY_1.XY.Left])
         for (let y = 0; y < arr.Size.Y; y++)
             for (let x = 0; x < arr.Size.X; x++)
                 tilt(x, y, dir);
-    //SOUTH, WEST
+    //SOUTH, EAST
     for (const dir of [XY_1.XY.Up, XY_1.XY.Right])
         for (let y = arr.Array.length - 1; y >= 0; y--)
             for (let x = arr.Array[y].length - 1; x >= 0; x--)

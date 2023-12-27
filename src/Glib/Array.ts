@@ -5,7 +5,7 @@ interface Array<T> {
     /** returns a shallow copy of an array */
     Copy(): T[]
     CopyFast(): T[]
-    Push(val: T): void
+    Push(val: T): T[]
     set(index: number, value: T): void
     ForEach(action: (value: T, index: number, array: T[]) => boolean | void): void
     forEachReversed(action: (value: T, index?: number, array?: T[]) => boolean | void): void
@@ -70,8 +70,9 @@ Array.prototype.CopyFast = function() {
         a[i] = this[i]
     return a
 }
-Array.prototype.Push = function<T> (val: T) {
+Array.prototype.Push = function<T> (val: T): T[] {
     this[this.length] = val
+    return this
 }
 Array.prototype.set = function<T>(index: number, value: T) {
     this[index] = value

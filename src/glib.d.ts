@@ -2,7 +2,7 @@ interface Array<T> {
     /** returns a shallow copy of an array */
     Copy(): T[]
     CopyFast(): T[]
-    Push(val: T): void
+    Push(val: T): T[]
     set(index: number, value: T): void
     ForEach(action: (value: T, index: number, array: T[]) => boolean | void): void
     forEachReversed(action: (value: T, index?: number, array?: T[]) => boolean | void): void

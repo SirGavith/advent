@@ -25,6 +25,7 @@ const tilt = (x: number, y: number, dir: XY) => {
 //then run to  I = 1000000000 % p + p * a; where a is large enough such that I > O
 
 //ex: loop period = 7
+//real: loop period = 17
 
 
 for (let i = 0; i < 7 + 17 * 60; i++) {
@@ -34,7 +35,7 @@ for (let i = 0; i < 7 + 17 * 60; i++) {
         for (let y = 0; y < arr.Size.Y; y++)
             for (let x = 0; x < arr.Size.X; x++)
                 tilt(x, y, dir)
-    //SOUTH, WEST
+    //SOUTH, EAST
     for (const dir of [XY.Up, XY.Right])
         for (let y = arr.Array.length - 1; y >= 0 ; y--)
             for (let x = arr.Array[y]!.length - 1; x >= 0; x--)

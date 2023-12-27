@@ -19,6 +19,7 @@ Array.prototype.CopyFast = function () {
 };
 Array.prototype.Push = function (val) {
     this[this.length] = val;
+    return this;
 };
 Array.prototype.set = function (index, value) {
     this[index] = value;
