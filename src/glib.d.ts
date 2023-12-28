@@ -57,6 +57,10 @@ interface Array<T> {
     //String
     toIntArray(radix?: number): number[]
 }
+// interface Array<T extends Array> {
+//     toObject(): {[key: ]}
+
+// }
 
 
 interface Boolean {
