@@ -221,6 +221,7 @@ import { Data } from "../main"
 
 
 //PART 2 with parsing::
+// put a '-' before broadcaster in the input and add '-rx' at the end
 
 const data = Data.map(l =>
     l.split(' -> ').Run(n => [n].Run(N => N.slice(1), N => N[0]), d => d.split(', ')).reduce((a,b) =>

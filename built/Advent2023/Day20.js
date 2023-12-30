@@ -172,6 +172,7 @@ const main_1 = require("../main");
 // }
 // prod.Log();
 //PART 2 with parsing::
+// put a '-' before broadcaster in the input and add '-rx' at the end
 const data = main_1.Data.map(l => l.split(' -> ').Run(n => [n].Run(N => N.slice(1), N => N[0]), d => d.split(', ')).reduce((a, b) => [a[0], [a[1], b]])).toObject();
 const r = (m) => data[m][1].reduce((arr, d) => data[d][0] !== '&' ? [...arr, d, ...r(d)] : arr, []);
 data['broadcaster'][1].map(d => [d, ...r(d)].reverse()

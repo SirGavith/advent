@@ -295,7 +295,7 @@ class Array2D {
                 row.map(v => (v === undefined ? '.' :
                     v === true ? '#' :
                         v === false ? '.' :
-                            typeof v === "number" && (v === Infinity || v >= Number.MAX_SAFE_INTEGER) ? '∞' : String(v)).padStart(3)).join(''));
+                            typeof v === "number" && (v === Infinity || v >= Number.MAX_SAFE_INTEGER) ? '∞' : String(v)).padStart(1)).join(''));
             // console.log('| '+row.map(v => v ?? '.').join(''))
         });
         console.log(']');

@@ -326,7 +326,7 @@ export class Array2D<T> {
                     v as unknown as boolean === false ? '.' :
                     typeof v === "number" && (v === Infinity || v >= Number.MAX_SAFE_INTEGER) ? '∞' : String(v)
                     
-                    ).padStart(3)
+                    ).padStart(1)
                 ).join('')
             )
             // console.log('| '+row.map(v => v ?? '.').join(''))
