@@ -67,6 +67,7 @@ for (const [name, conds] of workflows.Entries()) {
                 else if (rating[2] === '<=' && rating[1] + 1 < r[1])
                     r[1] = rating[1] + 1;
             }
+            ranges.Log();
             sum += (ranges['x'][1] - ranges['x'][0]) *
                 (ranges['m'][1] - ranges['m'][0]) *
                 (ranges['a'][1] - ranges['a'][0]) *

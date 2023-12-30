@@ -122,7 +122,7 @@ Array.prototype.Random = function() {
     return this[Math.floor((Math.random() * this.length))];
 }
 Array.prototype.Reverse = function() {
-    const a = this.Copy()
+    const a = this.CopyFast()
     a.reverse()
     return a;
 }
@@ -355,6 +355,8 @@ export function Convolute(l1: number[], l2: number[], truncate = true): number[]
         .forEach((v, xy) => out.IncrementOrCreate(xy.TaxicabNorm, v))
     return truncate ? out.slice(xy.Least - 1, out.length - xy.Least + 1) : out
 }
+
+export type RecursiveArray<T> = (T | RecursiveArray<T>)[]
 
 export type n1 = [number]
 export type n2 = [number, number]

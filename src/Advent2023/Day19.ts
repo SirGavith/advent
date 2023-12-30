@@ -62,6 +62,7 @@ const findConstraints = (forname: string): constraint[] => {
     throw new Error
 }
 
+
 let sum = 0
 
 for (const [name, conds] of workflows.Entries() as [string, condition[]][]) {
@@ -88,6 +89,8 @@ for (const [name, conds] of workflows.Entries() as [string, condition[]][]) {
                 else if (rating[2] === '<=' && rating[1] + 1 < r[1])
                     r[1] = rating[1] + 1
             }
+
+            ranges.Log()
 
             sum += (ranges['x'][1] - ranges['x'][0]) *
                    (ranges['m'][1] - ranges['m'][0]) *

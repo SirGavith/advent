@@ -71,7 +71,7 @@ Array.prototype.Random = function () {
     return this[Math.floor((Math.random() * this.length))];
 };
 Array.prototype.Reverse = function () {
-    const a = this.Copy();
+    const a = this.CopyFast();
     a.reverse();
     return a;
 };
