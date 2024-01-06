@@ -4,7 +4,7 @@ import { DataFull } from "../main";
 const arr = Array2D.fromString(DataFull)
 
 const energized = (init: [/*pos*/ XY, /*dir*/ XY]) => {
-    const arr3 = arr.map(_ => new Set<XY>)
+    const arr3 = arr.map(_ => new Set<XY>())
     const stack = [init]
 
     while (stack.length > 0) {

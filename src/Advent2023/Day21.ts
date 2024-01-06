@@ -8,7 +8,7 @@ let xys = new Set<string>([arr.Find('S')!.toString()])
 
 xys.Log()
 
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 100; i++) {
     const nxys = new Set<string>()
 
     xys.forEach(xy => {

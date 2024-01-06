@@ -4,7 +4,7 @@ const XY_1 = require("../Glib/XY");
 const main_1 = require("../main");
 const arr = XY_1.Array2D.fromString(main_1.DataFull);
 const energized = (init) => {
-    const arr3 = arr.map(_ => new Set);
+    const arr3 = arr.map(_ => new Set());
     const stack = [init];
     while (stack.length > 0) {
         const [pos, dir] = stack.pop();

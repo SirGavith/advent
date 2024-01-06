@@ -2,27 +2,37 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "console": "externalTerminal",
+            "console": "integratedTerminal",
             "type": "node",
             "request": "launch",
             "name": "Launch Real Input",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\built\\main.js",
+            "windows": {
+                "program": "${workspaceFolder}\\built\\main.js",
+            },
+            "linux": {
+                "program": "${workspaceFolder}/built/main.js"
+            },
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
         },
         {
-            "console": "externalTerminal",
+            "console": "integratedTerminal",
             "type": "node",
             "request": "launch",
             "name": "Launch Example Input",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\built\\main.js",
+            "windows": {
+                "program": "${workspaceFolder}\\built\\main.js",
+            },
+            "linux": {
+                "program": "${workspaceFolder}/built/main.js"
+            },
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ],

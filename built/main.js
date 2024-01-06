@@ -29,7 +29,7 @@ const path_1 = __importDefault(require("path"));
 const Filer_1 = require("./Glib/Filer");
 main_1.Glib.init();
 const year = '2023';
-const p = 'C:/Users/gavin/Documents/Code/advent/src/Advent' + year;
+const p = path_1.default.join(__dirname, '../src/Advent' + year);
 const recentFile = fs.readdirSync(p)
     .map(file => ({ name: file, timestamp: fs.statSync(path_1.default.join(p, file)).mtimeMs }))
     .sort((a, b) => b.timestamp - a.timestamp)[0].name.slice(0, -3);

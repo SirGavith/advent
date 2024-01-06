@@ -6,7 +6,7 @@ const arr = XY_1.Array2D.fromString(main_1.DataFull).Log();
 // let xys = []
 let xys = new Set([arr.Find('S').toString()]);
 xys.Log();
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 100; i++) {
     const nxys = new Set();
     xys.forEach(xy => {
         XY_1.XY.fromString(xy).Neighbours().forEach(n => {

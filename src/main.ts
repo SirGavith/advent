@@ -5,7 +5,7 @@ import { Filer } from './Glib/Filer'
 
 Glib.init()
 const year = '2023'
-const p = 'C:/Users/gavin/Documents/Code/advent/src/Advent' + year
+const p = path.join(__dirname, '../src/Advent' + year)
 const recentFile = fs.readdirSync(p)
     .map(file => ({ name: file, timestamp: fs.statSync(path.join(p, file)).mtimeMs }))
     .sort((a, b) => b.timestamp - a.timestamp)[0].name.slice(0, -3)
