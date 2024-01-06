@@ -10,6 +10,7 @@ var stopwatch = Stopwatch.StartNew();
 //AOC DAY 19 PART 2
 
 var workflowsMap = new Dictionary<string, IEnumerable<Condition>>();
+
 foreach (var line in lines) {
     if (line == "") break;
     // Console.WriteLine(line);

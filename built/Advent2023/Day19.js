@@ -5,25 +5,21 @@ const [workflows, parts] = main_1.DataFull.Split2Lines().Run(w => w.SplitLines()
     const a = r.split(':');
     if (a.length === 1)
         return [undefined, a[0]];
-    return a.Run(cond => [...(cond.split(/[<>]/).Run(s => s, s => s?.toInt())), cond.match(/[<>]/)[0]], dest => dest);
-}))).toObject(), p => p
-// p.SplitLines().map(
-// l => l.slice(1, -1).split(',').map(
-// a => a.split('=').Run(n => n, n => n.toInt())).toObject() as {x: number, m: number, a: number, s: number})
-);
+    return a.Run(cond => [...(cond.split(/[<>]/).Run(s => s, s => s?.toInt())), cond[1]], dest => dest);
+}))).toObject(), p => p.SplitLines().map(l => l.slice(1, -1).split(',').map(a => a.split('=').Run(n => n, n => n.toInt())).toObject()));
 //PART 1
-// parts.reduce((sum, part) => {
-//     let workflow = 'in'
-//     while (workflow !== 'A' && workflow !== 'R') {
-//         for (const [cond, dest] of workflows[workflow]) {
-//             if (cond === undefined || (cond[2] === '>' ? part[cond[0]] > cond[1] : part[cond[0]] < cond[1])) {
-//                 workflow = dest
-//                 break
-//             }
-//         }
-//     }
-//     return workflow === 'A' ? sum + part.x + part.m + part.a + part.s : sum
-// }, 0).Log()
+parts.reduce((sum, part) => {
+    let workflow = 'in';
+    while (workflow !== 'A' && workflow !== 'R') {
+        for (const [cond, dest] of workflows[workflow]) {
+            if (cond === undefined || (cond[2] === '>' ? part[cond[0]] > cond[1] : part[cond[0]] < cond[1])) {
+                workflow = dest;
+                break;
+            }
+        }
+    }
+    return workflow === 'A' ? sum + part.x + part.m + part.a + part.s : sum;
+}, 0).Log();
 //PART 2
 const getConstraintsIn = (conds, i, name) => {
     return [
@@ -67,11 +63,15 @@ for (const [name, conds] of workflows.Entries()) {
                 else if (rating[2] === '<=' && rating[1] + 1 < r[1])
                     r[1] = rating[1] + 1;
             }
-            ranges.Log();
-            sum += (ranges['x'][1] - ranges['x'][0]) *
+            let prod = (ranges['x'][1] - ranges['x'][0]) *
                 (ranges['m'][1] - ranges['m'][0]) *
                 (ranges['a'][1] - ranges['a'][0]) *
                 (ranges['s'][1] - ranges['s'][0]);
+            // console.log(name, (ranges['x'][1] - ranges['x'][0]),
+            //     (ranges['m'][1] - ranges['m'][0]),
+            //     (ranges['a'][1] - ranges['a'][0]),
+            //     (ranges['s'][1] - ranges['s'][0]), '=', prod)
+            sum += prod;
         }
     }
 }
