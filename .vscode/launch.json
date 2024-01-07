@@ -2,7 +2,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "console": "integratedTerminal",
             "type": "node",
             "request": "launch",
             "name": "Launch Real Input",
@@ -11,8 +10,10 @@
             ],
             "windows": {
                 "program": "${workspaceFolder}\\built\\main.js",
+                "console": "externalTerminal",
             },
             "linux": {
+                "console": "integratedTerminal",
                 "program": "${workspaceFolder}/built/main.js"
             },
             "outFiles": [
@@ -29,8 +30,10 @@
             ],
             "windows": {
                 "program": "${workspaceFolder}\\built\\main.js",
+                "console": "externalTerminal",
             },
             "linux": {
+                "console": "integratedTerminal",
                 "program": "${workspaceFolder}/built/main.js"
             },
             "outFiles": [
