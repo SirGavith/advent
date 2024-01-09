@@ -47,8 +47,10 @@ arr2.forEach((_, xy2) => {
 // arr2.set(offset.plus(5), 'S')
 
 
-let aCount = 0
-let bCount = 0
+let rCount = 0
+let gCount = 0
+let mCount = 0
+let yCount = 0
 
 arr2.Array.forEach((r, y) => {
     console.log(r.map((v, x) => {
@@ -58,23 +60,25 @@ arr2.Array.forEach((r, y) => {
             new XY(x, y).minus(offset.minus(0, 1)).TaxicabNorm < 65 || 
             new XY(x, y).minus(offset.minus(1, 0)).TaxicabNorm < 65 || 
             new XY(x, y).minus(offset.minus(1, 1)).TaxicabNorm < 65 ) {
+            if (v === 'O') mCount++
             colors.push(BgMagenta)
         }
 
-        if (new XY(x, y).minus(offset.plus(131).minus(0, 0)).TaxicabNorm < 65 ||
-            new XY(x, y).minus(offset.plus(131).minus(0, 1)).TaxicabNorm < 65 ||
-            new XY(x, y).minus(offset.plus(131).minus(1, 0)).TaxicabNorm < 65 ||
-            new XY(x, y).minus(offset.plus(131).minus(1, 1)).TaxicabNorm < 65) {
-            if (v === 'O') aCount++
+        if (new XY(x, y).minus(offset.plus(131, 0).minus(0, 0)).TaxicabNorm < 65 ||
+            new XY(x, y).minus(offset.plus(131, 0).minus(0, 1)).TaxicabNorm < 65 ||
+            new XY(x, y).minus(offset.plus(131, 0).minus(1, 0)).TaxicabNorm < 65 ||
+            new XY(x, y).minus(offset.plus(131, 0).minus(1, 1)).TaxicabNorm < 65) {
+            if (v === 'O') yCount++
             colors.push(BgYellow)
         }
 
         if (new XY(x, y).minus(offset).plus(-65, -65 + 131).TaxicabNorm <= 65) {
+            if (v === 'O') gCount++
             colors.push(BgGreen)
         }
 
         if (new XY(x, y).minus(offset).plus(-65, -65).TaxicabNorm <= 65) {
-            if (v === 'O') bCount++
+            if (v === 'O') rCount++
             colors.push(BgRed)
         }
 
@@ -85,10 +89,13 @@ arr2.Array.forEach((r, y) => {
     }).join(Reset))
 })
 
-aCount.Log()
-bCount.Log()
+rCount.Log()
+gCount.Log()
 
-console.log(aCount * 81850984601 + bCount * 81850984600)
+mCount.Log()
+yCount.Log()
+
+console.log(rCount * 40925694601 + gCount * 40925290000 + mCount * 81850984600 / 2 + yCount * 81850984600 / 2)
 
 // arr2.Log()
 
