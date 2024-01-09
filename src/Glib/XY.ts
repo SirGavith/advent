@@ -197,6 +197,24 @@ export class XY {
         console.log('XY:', this.X, this.Y)
         return this
     }
+
+    static ArrayMinMax(arr: XY[]): [XY, XY] {
+        let min = new XY(Number.MAX_VALUE)
+        let max = new XY(Number.MIN_VALUE)
+
+        arr.forEach(xy => {
+            if (xy.X < min.X) min.X = xy.X
+            if (xy.Y < min.Y) min.Y = xy.Y
+            if (xy.X > max.X) max.X = xy.X
+            if (xy.Y > max.Y) max.Y = xy.Y
+        })
+        return [min, max]
+    }
+
+    static ArraySizeOffset(arr: XY[]): [XY, XY] {
+        const [min, max] = this.ArrayMinMax(arr)
+        return [max.minus(min).plus(1), min.times(-1)]
+    }
 }
 
 export class Array2D<T> {

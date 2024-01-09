@@ -1,3 +1,4 @@
+//https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 
 export const Reset = "\x1b[0m"
 export const Bright = "\x1b[1m"

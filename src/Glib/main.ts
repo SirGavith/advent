@@ -6,6 +6,7 @@ export class Glib {
         require('./Generator')
         require('./Number')
         require('./Object')
+        require('./Set')
         require('./String')
     }
 }
