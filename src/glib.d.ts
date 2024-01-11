@@ -57,10 +57,10 @@ interface Array<T> {
     //String
     toIntArray(radix?: number): number[]
 }
-// interface Array<T extends Array> {
+interface Array<T extends Array<U>> {
 //     toObject(): {[key: ]}
-
-// }
+    PushOrCreate2D(index: number, value: U): void
+}
 
 
 interface Boolean {
@@ -89,6 +89,7 @@ interface Object {
     forEach(lambda: (key: string, val: any) => void): void;
     Copy(): {};
     IncrementOrCreate(key: string, value?: number | bigint): void;
+    PushOrCreate2D(key: string, value: any): void
     Log(): {};
 }
 interface String {

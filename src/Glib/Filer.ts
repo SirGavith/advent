@@ -15,6 +15,12 @@ export class Filer {
         return lines
     }
     static WriteFile(localpath: string, data: string | Uint8Array) {
-        fs.writeFile(localpath, data, err => { if (err) console.log(err) })
+        fs.writeFileSync(localpath, data)
+    }
+    static WriteJSON(localpath: string, data: any) {
+        fs.writeFileSync(localpath, JSON.stringify(data))
+    }
+    static ReadJson<T>(localpath: string): any {
+        return JSON.parse(fs.readFileSync(localpath, 'utf8'))
     }
 }

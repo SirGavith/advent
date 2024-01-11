@@ -30,6 +30,7 @@ interface Array<T> {
     FillEmpty(value: T, pad?: number): Array<T>
     Count(predicate?: (value: T, index: number, array: T[]) => boolean): number
     IncrementOrCreate (index: number, value?: number): Array<T>
+    PushOrCreate2D(index: number, value: T): void
     // BinarySearch(search: (value: T, index: number) => boolean): T
     Permutations(): T[][]
     Frequency(val: T): number
@@ -325,6 +326,10 @@ Array.prototype.IncrementOrCreate2D = function(val1: number, val2: number) {
         this[val1] = []
         this[val1][val2] = 1
     }
+}
+Array.prototype.PushOrCreate2D = function (index: number, value: any) {
+    if (this[index] !== undefined) this[index].push(value)
+    else this[index] = [value]
 }
 Array.prototype.Transpose2D = function() {
     // this = [[a,b],[c,d]]

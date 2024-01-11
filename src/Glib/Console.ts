@@ -25,3 +25,10 @@ export const BgBlue = "\x1b[44m"
 export const BgMagenta = "\x1b[45m"
 export const BgCyan = "\x1b[46m"
 export const BgWhite = "\x1b[47m"
+
+export function print(s: string) {
+    process.stdout.write(s)
+}
+export function println(s: string) {
+    process.stdout.write(s + '\n')
+}

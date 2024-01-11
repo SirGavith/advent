@@ -52,6 +52,8 @@ export class XYZ {
     IsGreaterEQAll(xy: XYZ) { return this.X >= xy.X && this.Y >= xy.Y && this.Z >= xy.Z }
     IsGreaterAll(xy: XYZ) { return this.X > xy.X && this.Y > xy.Y && this.Z > xy.Z }
 
+    WithinArea(xyz: XYZ, size: XYZ) { return this.IsGreaterEQAll(xyz) && this.minus(xyz).IsLessEQAll(size) }
+
 
     ManhattanDist(xyz: XYZ) {
         const m = this.minus(xyz).Abs()
@@ -149,10 +151,33 @@ export class XYZ {
 
     static fromString(s: string) {
         s = s.RemoveChars('()[]{} '.toArray())
-        return new XYZ(...s.split(', ').toIntArray() as [number, number, number])
+        return new XYZ(...s.RemoveChars([' ']).split(',').toIntArray() as [number, number, number])
     }
     static fromTuple(t: [number, number, number]) {
         return new XYZ(t[0], t[1], t[2])
+    }
+
+    static Zero = new XYZ
+    static One = new XYZ(1)
+
+    static ArrayMinMax(arr: XYZ[]): [XYZ, XYZ] {
+        let min = new XYZ(Number.MAX_VALUE)
+        let max = new XYZ(Number.MIN_VALUE)
+
+        arr.forEach(xyz => {
+            if (xyz.X < min.X) min.X = xyz.X
+            if (xyz.Y < min.Y) min.Y = xyz.Y
+            if (xyz.Z < min.Z) min.Z = xyz.Z
+            if (xyz.X > max.X) max.X = xyz.X
+            if (xyz.Y > max.Y) max.Y = xyz.Y
+            if (xyz.Z > max.Z) max.Z = xyz.Z
+        })
+        return [min, max]
+    }
+
+    static ArraySizeOffset(arr: XYZ[]): [XYZ, XYZ] {
+        const [min, max] = this.ArrayMinMax(arr)
+        return [max.minus(min).plus(1), XYZ.Zero.minus(min)]
     }
 }
 
@@ -160,7 +185,7 @@ export class XYZ {
 export class Array3D<T> {
     Array: (T | undefined)[][][] = []
 
-    constructor(public Size: XYZ, fillValue: T|undefined = undefined) {
+    constructor(public Size: XYZ, fillValue: T | undefined = undefined, public Checked = false) {
         for (let i = 0; i < Size.Z; i++) {
             this.Array[i] = []
             for (let ii = 0; ii < Size.Y; ii++) {
@@ -174,21 +199,24 @@ export class Array3D<T> {
     }
 
     set(xy: XYZ, value: T | undefined) {
+        if (this.Checked && !xy.WithinArea(XYZ.Zero, this.Size.minus(1)))
+            throw new Error('Array set out of bounds')
         this.Array.at(xy.Z)?.at(xy.Y)?.set(xy.X, value)
     }
 
     Copy() {
         const arr = new Array3D<T>(this.Size)
+        arr.Checked = this.Checked
         arr.Array = this.Array.map(a => a.map(b => b.Copy()))
         return arr
     }
 
-    forEach(lambda: (value: T | undefined, index: XYZ) => void) {
+    forEach(lambda: (value: T | undefined, index: XYZ) => void | boolean) {
         for (let z = 0; z < this.Array.length; z++) {
             for (let y = 0; y < this.Array[z].length; y++) {
                 for (let x = 0; x < this.Array[z][y].length; x++) {
                     let xyz = new XYZ(x, y, z)
-                    lambda(this.get(xyz), xyz)
+                    if (lambda(this.get(xyz), xyz) === true) return
                 }
             }
         }
@@ -205,6 +233,7 @@ export class Array3D<T> {
     }
 
     Log() {
+
         console.log('[')
         this.Array.forEach(a => {
             //log subarray
