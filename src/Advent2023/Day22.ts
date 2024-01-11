@@ -16,36 +16,42 @@ const logArr = (a: Array3D<number>) => {
     }
 }
 
-const canBrickFall = (arr: Array3D<number>, brickPositions: XYZ[], brickIndex: number) => {
+const canBrickFall = (arr: Array3D<number>, brickPositions: XYZ[], brickIndex: number, ignore?: number) => {
     return brickPositions.every(brickPosition => {
         const below = arr.get(brickPosition.minus(0, 0, 1))
-        return below === undefined || below === brickIndex
+        return below === undefined || below === brickIndex || (ignore !== undefined && below === ignore)
     })
 }
-const tryFallBrick = (arr: Array3D<number>, brickPositions: XYZ[], brickIndex: number): boolean => {
-    if (canBrickFall(arr, brickPositions, brickIndex)) {
+
+function Fall(arr: Array3D<number>, BricksPositions: (XYZ[] | undefined)[]): number {
+    let count = 0
+    BricksPositions.forEach((brickPositions, i) => {
+        if (brickPositions === undefined) return
+        //see how far brick can fall
+        let dz = 0
+        while (
+            brickPositions.every(brickPosition => {
+                const below = arr.get(brickPosition.minus(0, 0, dz + 1))
+                return below === undefined || below === i
+            })
+        ) { dz++ }
+
+        if (dz === 0) return
+
+        //fall brick that much
         brickPositions.forEach(brickPosition => {
             arr.set(brickPosition, undefined)
-            brickPosition.minusEQ(0, 0, 1)
-            arr.set(brickPosition, brickIndex)
+            brickPosition.minusEQ(0, 0, dz)
+            arr.set(brickPosition, i)
         })
-        return true
-    }
-    return false
+        count++
+    })
+    return count
 }
 
-function WriteBricks() {
-    const [arr, BricksPositions] = ReadFallBricksArr()
 
-    // logArr()
-
-    Filer.WriteJSON('./data/day22arr.json', arr)
-    Filer.WriteJSON('./data/day22bricks.json', BricksPositions)
-}
-
-function ReadFallBricksArr(): [Array3D<number>, XYZ[][]] {
+function GetBricks(): [Array3D<number>, XYZ[][]] {
     const Bricks = Data.map(l => l.split('~').map(xyz => XYZ.fromString(xyz)) as [XYZ, XYZ])
-
     const arr = new Array3D<number>(XYZ.ArraySizeOffset(Bricks.flat())[0].plus(0, 0, 1), undefined, true)
 
     for (let x = 0; x < arr.Size.X; x++) {
@@ -53,6 +59,7 @@ function ReadFallBricksArr(): [Array3D<number>, XYZ[][]] {
             arr.set(new XYZ(x, y, 0), -1)
         }
     }
+    Bricks.sort((a, b) => a[0].Z - b[0].Z)
 
     const BricksPositions: XYZ[][] = []
 
@@ -63,42 +70,31 @@ function ReadFallBricksArr(): [Array3D<number>, XYZ[][]] {
         }, brick[0])
     })
 
-    while (BricksPositions.reduce((fell, bricksPositions, i) =>
-        fell || tryFallBrick(arr, bricksPositions, i)
-        , false)) { }
-
+    Fall(arr, BricksPositions)
+    
     return [arr, BricksPositions]
 }
 
+
 function part1() {
-    // BricksPositions.Count((_, i) => {
-    //     //see if I can elim brick
-    //     const makesFall = BricksPositions.some((otherBrickPositions, otherBrickI) =>
-    //         canBrickFall(otherBrickPositions, otherBrickI, i))
+    const [arr, BricksPositions] = GetBricks()
 
-    //     console.log(i, makesFall)
+    console.log('done falling')
 
-    //     return !makesFall
-    // }).Log()
+    BricksPositions.Count((_, i) => {
+        //see if I can elim brick
+        const makesFall = BricksPositions.some((otherBrickPositions, otherBrickI) =>
+            canBrickFall(arr, otherBrickPositions, otherBrickI, i))
+
+        return !makesFall
+    }).Log()
 }
 
 function part2() {
-    // const arr = Object.assign(new Array3D<number>(XYZ.Zero), Filer.ReadJson('./data/day22arr.json')) as Array3D<number>
-    // arr.Size = Object.assign(new XYZ, arr.Size)
-    // const BricksPositions = (Filer.ReadJson('./data/day22bricks.json') as XYZ[][]).map(l => l.map(a => Object.assign(new XYZ, a)))
+    const [arr, BricksPositions] = GetBricks()
 
-    const [arr, BricksPositions] = ReadFallBricksArr()
-
-
-    logArr(arr)
-    // BricksPositions.Log()
-
-    
     BricksPositions.map((_, i) => {
-        //count falls
-        let fallenBricks = new Set<number>()
         //copy arr and bricksPositions
-
         const arr2 = arr.Copy()
         const BricksPositions2 : (XYZ[] | undefined)[] = BricksPositions.map(a => a.map(b => b.Copy()))
 
@@ -107,23 +103,11 @@ function part2() {
             arr2.set(brickPosition, undefined)
         })
         BricksPositions2[i] = undefined
-
-        logArr(arr2)
-        // BricksPositions2.Log()
-
-        while (BricksPositions2.reduce((fellYet, bricksPositions, i) => {
-            if (bricksPositions === undefined) return fellYet
-            const fellNow = tryFallBrick(arr2, bricksPositions, i)
-            if (fellNow) fallenBricks.add(i)
-            return fellYet || fellNow
-        }, false)) { }
-
-        console.log(i, fallenBricks.size, fallenBricks)
-
-        return fallenBricks.size
+        
+        return Fall(arr2, BricksPositions2)
     }).Sum().Log()  
 }
 
-// InitFallBricks()
+// part1()
 
 part2()
