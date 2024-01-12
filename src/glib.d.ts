@@ -6,7 +6,7 @@ interface Array<T> {
     set(index: number, value: T): void
     ForEach(action: (value: T, index: number, array: T[]) => boolean | void): void
     forEachReversed(action: (value: T, index?: number, array?: T[]) => boolean | void): void
-    forEachPair(action: (value: T[], index: number[]) => void, allowDuplicates?: boolean, allowDoubles?: boolean): void
+    forEachPair(action: (value: [T, T], index: [number, number]) => void, allowDuplicates?: boolean, allowDoubles?: boolean, allowCrosspairs?: boolean): void
     forEachGroup(groupSize: number, action: (value: T[], index: number[]) => void, allowDuplicates?: boolean, allowDoubles?: boolean): void
     Reduce(action: (prev: T, val: T, index: number, arr: T[]) => T | [T, boolean]): T
     Reduce(action: (prev: T, val: T, index: number, arr: T[]) => T | [T, boolean], start: T): T

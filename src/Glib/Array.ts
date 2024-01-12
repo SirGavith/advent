@@ -9,7 +9,7 @@ interface Array<T> {
     set(index: number, value: T): void
     ForEach(action: (value: T, index: number, array: T[]) => boolean | void): void
     forEachReversed(action: (value: T, index?: number, array?: T[]) => boolean | void): void
-    forEachPair(action: (value: T[], index: number[]) => void, allowDuplicates?: boolean, allowDoubles?: boolean): void
+    forEachPair(action: (value: [T, T], index: [number, number]) => void, allowDuplicates?: boolean, allowDoubles?: boolean, allowCrosspairs?: boolean): void
     forEachGroup(groupSize: number, action: (value: T[], index: number[]) => void, allowDuplicates?: boolean, allowDoubles?: boolean): void
 
     Reduce(action: (prev: T, val: T, index: number, arr: T[]) => T | [T, boolean]): T
@@ -88,17 +88,26 @@ Array.prototype.forEachReversed = function<T>(action: (value: T, index: number, 
         if (action(this.at(i), i, this) === true) break
     }
 }
-Array.prototype.forEachPair = function(action: (value: any[], index: number[]) => void, allowDuplicates = true, allowDoubles = true) {
-    const pairs: string[] = []
-    this.forEach((val, i) => {
-        this.forEach((val2, ii) => {
-            if (allowDoubles ||  i !== ii) {
-                const svals = [val, val2].sort((a, b) => a - b).toString()
-                if (allowDuplicates || !pairs.includes(svals)) action([val, val2], [i, ii])
-                pairs.push(svals)
-            }
+Array.prototype.forEachPair = function<T>(action: (value: [T, T], index: [number, number]) => void, allowDuplicates = true, allowDoubles = true, allowCrossPairs = true) {
+    if (allowCrossPairs) {
+        const pairs: string[] = []
+        this.forEach((val, i) => {
+            this.forEach((val2, ii) => {
+                if (allowDoubles ||  i !== ii) {
+                    const svals = [val, val2].sort((a, b) => a - b).toString()
+                    if (allowDuplicates || !pairs.includes(svals)) action([val, val2], [i, ii])
+                    pairs.push(svals)
+                }
+            })
         })
-    })
+    }
+    else {
+        for (let i = 0; i < this.length; i++) {
+            for (let j = i + 1; j < this.length; j++) {
+                action([this[i], this[j]], [i, j])
+            }
+        }
+    }
 }
 Array.prototype.Reduce = function<T, TT>(action: (prev: TT, val: T, index: number, arr: any[]) => TT | [TT, boolean], start?: TT): TT {
     let accum: TT = start ?? this.at(0)

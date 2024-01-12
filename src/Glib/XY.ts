@@ -97,7 +97,7 @@ export class XY {
     get Area() { return this.X * this.Y}
 
     toArray() { return [this.X, this.Y] }
-    toString() { return `${this.X},${this.Y}` }
+    toString() { return this.X + ',' + this.Y }
     toCx() { return new Cx(this.X, this.Y) }
     Copy() { return new XY(this.X, this.Y) }
 
@@ -188,6 +188,12 @@ export class XY {
     static Right =  new XY( 1, 0)
     static Left =   new XY(-1, 0)
 
+    static South = new XY(0, 1)
+    static North = new XY(0, -1)
+    static East = new XY(1, 0)
+    static West = new XY(-1, 0)
+
+
     static UpLeft = new XY(-1, 1)
     static UpRight = new XY(1, 1)
     static DownLeft = new XY(-1, -1)
@@ -196,6 +202,13 @@ export class XY {
     Log() {
         console.log('XY:', this.X, this.Y)
         return this
+    }
+
+    toCardinalString() {
+        if (this.EQ(XY.North)) return 'N'
+        if (this.EQ(XY.South)) return 'S'
+        if (this.EQ(XY.East)) return 'E'
+        if (this.EQ(XY.West)) return 'W'
     }
 
     static ArrayMinMax(arr: XY[]): [XY, XY] {
@@ -257,7 +270,7 @@ export class Array2D<T> {
     }
 
     Neighbours(xy: XY, includeDiags = false) {
-        return xy.Neighbours(includeDiags).map(n => [n, this.get(n)] as [XY, T | undefined]).filter(n => n[1] != undefined) as [XY, T][]
+        return xy.Neighbours(includeDiags).map(n => [n, this.get(n)]).filter(n => n[1] !== undefined) as [XY, T][]
     }
 
     forEach(lambda: (value: T | undefined, index: XY, array: this) => void) {
@@ -342,8 +355,9 @@ export class Array2D<T> {
                     v === undefined ? '.' :
                     v as unknown as boolean === true ? '#' :
                     v as unknown as boolean === false ? '.' :
-                    typeof v === "number" && (v === Infinity || v >= Number.MAX_SAFE_INTEGER) ? '∞' : String(v)
+                    typeof v === "number" && (v === Infinity || v >= Number.MAX_SAFE_INTEGER) ? '∞' : 
                     
+                    String(v)
                     ).padStart(1)
                 ).join('')
             )
