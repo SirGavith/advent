@@ -244,17 +244,25 @@ export class Array2D<T> {
             undefined
     }
 
-    getRow(y: number): Array<T|undefined> {
+    getRow(y: number): (T | undefined)[] {
         return this.Array[y]
     }
 
-    private cols: Array<T | undefined>[] = []
-    getCol(x: number): Array<T | undefined> {
+    private cols: (T | undefined)[][] = []
+    getCol(x: number): (T | undefined)[] {
         // return this.Array.map(row => row[x])
 
         if (this.cols[x] === undefined) 
             this.cols[x] = this.Array.map(row => row[x])
         return this.cols[x]
+    }
+
+    setCol(x: number, col: (T | undefined)[]) {
+        if (col.length !== this.Size.Y)
+            throw new Error('col is of wrong size')
+        col.forEach((v, i) => {
+            this.Array[i][x] = v
+        })
     }
 
     set(xy:XY, value: T | undefined) {
@@ -346,7 +354,6 @@ export class Array2D<T> {
 
     Log() {
         // console.log(this)
-
         console.log('[')
         this.Array.forEach((row, i) => {
             console.log('| ' + 
@@ -364,8 +371,6 @@ export class Array2D<T> {
             // console.log('| '+row.map(v => v ?? '.').join(''))
         })
         console.log(']')
-
-
 
         return this
     }
