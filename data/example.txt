@@ -11,23 +11,3 @@ nvd: lhk
 lsr: lhk
 rzs: qnr cmg lsr rsh
 frs: qnr lhk lsr
-//
-//
-//
-//
-// bvb: xhk hfx
-// hfx
-// jqt: rhn xhk nvd
-// ntq: jqt hfx bvb xhk
-// rhn: xhk bvb hfx
-// xhk: hfx
-// 
-// cmg: qnr nvd lhk bvb
-// frs: qnr lhk lsr
-// lhk
-// lsr: lhk
-// nvd: lhk
-// pzl: lsr hfx nvd
-// qnr: nvd
-// rsh: frs pzl lsr
-// rzs: qnr cmg lsr rsh

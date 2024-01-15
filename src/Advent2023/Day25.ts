@@ -1,52 +1,43 @@
 import { Data } from "../main";
 
-const m = new Map(Data.map(l => l.split(': ').Run(a => a, b => [new Map(b.split(' ').map(a => [a, 1] as [string, number])), 1] as [Map<string, number>, number])))
+const m = new Map<string, [Map<string, number>, number]>()
 
-m.forEach((neighbors, component) => {
-    neighbors[0].forEach((_, v) => {
-        if (m.has(v)) m.get(v)![0].set(component, 1)
-        else m.set(v, [new Map([[component, 1]]), 1])
+Data.forEach(line => {
+    const [name, neighbors] = line.split(': ')
+
+    let neighborsMap = m.get(name)
+    if (neighborsMap === undefined) {
+        neighborsMap = [new Map<string, number>(), 1] as const
+        m.set(name, neighborsMap)
+    }
+
+    neighbors.split(' ').forEach(n => {
+        neighborsMap![0].set(n, 1)
+        const currentNeighborNeighbors = m.get(n)
+        if (currentNeighborNeighbors !== undefined) 
+            currentNeighborNeighbors[0].set(name, 1)
+        else m.set(n, [new Map([[name, 1]]), 1])
     })
 })
-const originalSize = m.size.Log()
-const a = m.keys().next().value.Log() as string
-// const allNodes = new Set(m.toArray().map(([k]) => k))
-// allNodes.Log()
 
-m.Log()
-
-//weight, size of first block; block2.size = allNodes.size - block1.size
+const originalSize = m.size
+const a = m.keys().next().value as string
 
 //Stoer-Wagner algorithm
 
 // let i = m.size
 for (let i = m.size; i > 1; i--) {
-    console.log(i)
-    
     let supernode = new Set([a])
+    let supernodeNeighbors = m.get(a)![0].Copy()
     let prevNode = a
-    // let cutWeight: number
-
-    while (supernode.size !== i - 1) {
-        // console.log('supernode', supernode)
-
+ 
+    while (supernode.size < i - 1) {
         // 'natural way'; find adjacent node to the supernode with maximum weight
-        // const adjacentWeights = supernode.toArray().map(node => m.get(node)!).Log()
-
-        const aWeights = new Map<string, number>()
         
-        
-        supernode.forEach(node => m.get(node)![0].forEach((w, n) => {
-            if (supernode.has(n)) return
-            const currentW = aWeights.get(n)
-            if (currentW !== undefined)
-                aWeights.set(n, currentW + w)
-            else aWeights.set(n, w)
-        }))
+        let mostAdjacentNode: string | null = null,
+            weight = 0
 
-        let mostAdjacentNode: string | null = null, weight = 0
-
-        aWeights.forEach((w, n) => {
+        supernodeNeighbors.forEach((w, n) => {
             if (w > weight) {
                 weight = w
                 mostAdjacentNode = n
@@ -56,43 +47,38 @@ for (let i = m.size; i > 1; i--) {
         prevNode = mostAdjacentNode!
         supernode.add(mostAdjacentNode!)
 
-        // console.log('adding', mostAdjacentNode)
+        supernodeNeighbors.delete(mostAdjacentNode!)
+
+        m.get(mostAdjacentNode!)![0].forEach((w, n) => {
+            if (!supernode.has(n))
+                supernodeNeighbors.set(n, (supernodeNeighbors.get(n) ?? 0) + w)
+        })
     }
-    let finalNode: string; // = allNodes.difference(superNode); not yet supported :(
-        m.forEach((_, node) => { if (!supernode.has(node)) finalNode = node })
-    if (!finalNode!) throw new Error
 
-    let cutWeight = m.get(finalNode)![0].Values().Sum()
+    const [finalNode, cutWeight] = supernodeNeighbors.entries().next().value as [string, number]
 
-    console.log('finalNode', finalNode, 'prevNode', prevNode, 'cutWeight', cutWeight)
     if (cutWeight === 3) {
-        //IF WRONG BC SUPERNODE HAS MERGERS
-        console.log(m.get(finalNode)![1], originalSize - m.get(finalNode)![1], m.get(finalNode)![1] * (originalSize - m.get(finalNode)![1]))
+        console.log(m.get(finalNode)![1] * (originalSize - m.get(finalNode)![1]))
         break
     }
 
-    console.log('merging', finalNode, 'into', prevNode)
-
     //remove finalNode
     //merge prevNode and finalNode
+
     const p = m.get(prevNode)!
+    const f = m.get(finalNode)!
+
     p[0].delete(finalNode)
-    p[1] += m.get(finalNode)![1]
+    p[1] += f[1]
     
-    m.get(finalNode)![0].forEach((w, neighbor) => {
+    f[0].forEach((w, neighbor) => {
         // copy finalNode neighbors and weights to prevNode
-        if (neighbor !== prevNode) p[0].set(neighbor, (p[0].get(neighbor) ?? 0) + w)
+        if (neighbor === prevNode) return
+
+        m.get(prevNode)![0].set(neighbor, (p[0].get(neighbor) ?? 0) + w)
+        m.get(neighbor)![0].set(prevNode, ((m.get(neighbor)![0].get(prevNode) ?? 0) + w))
+        m.get(neighbor)![0].delete(finalNode)
     })
 
     m.delete(finalNode)
-
-    m.forEach((map, node) => {
-        if (node === prevNode) return 
-        if (map[0].has(finalNode)) {
-            map[0].set(prevNode, (map[0].get(prevNode) ?? 0) + map[0].get(finalNode)!)
-            map[0].delete(finalNode)
-        }
-    })
-
-    m.Log()
 }
