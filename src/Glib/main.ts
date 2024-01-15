@@ -4,6 +4,7 @@ export class Glib {
         require('./Bigint')
         require('./Boolean')
         require('./Generator')
+        require('./Map')
         require('./Number')
         require('./Object')
         require('./Set')
