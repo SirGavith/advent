@@ -23,7 +23,14 @@ Data.forEach(line => {
 const originalSize = m.size
 const a = m.keys().next().value as string
 
-//Stoer-Wagner algorithm
+// Stoer-Wagner  min-cut algorithm
+// we know min cut is three, so break as soon as we see that
+// in each step, the algorithm makes two blocks: the supernode, and the rest, which are merged together.
+// in each step, the supernode is all nodes but 2, and those two get merged.
+// to make the supernode, start with any node A, and then repeatedly add the most adjacent node
+// the most adjacent node is the node which has the heighest summed weight to all nodes in the supernode
+
+// https://www.youtube.com/watch?v=AtkEpr7dsW4
 
 // let i = m.size
 for (let i = m.size; i > 1; i--) {
