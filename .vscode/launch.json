@@ -10,7 +10,7 @@
             ],
             "windows": {
                 "program": "${workspaceFolder}\\built\\main.js",
-                "console": "externalTerminal",
+                "console": "internalConsole",
             },
             "linux": {
                 "console": "integratedTerminal",
@@ -30,7 +30,7 @@
             ],
             "windows": {
                 "program": "${workspaceFolder}\\built\\main.js",
-                "console": "externalTerminal",
+                "console": "internalConsole",
             },
             "linux": {
                 "console": "integratedTerminal",

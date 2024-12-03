@@ -4,6 +4,18 @@ interface Map<K, V> {
     Keys(): K[]
     Log(): Map<K,V>
     Values(): V[]
+    Increment(key: K, i?: number): void
+}
+
+Map.prototype.Increment = function<T>(key: T, i: number = 1) {
+    const e = this.get(key)
+    if (e === undefined) {
+        this.set(key, i)
+    }
+    else {
+        if (typeof e !== 'number') throw new TypeError
+        this.set(key, e + i)
+    }
 }
 
 Map.prototype.toArray = function toArray<K, V>(): [K, V][] {

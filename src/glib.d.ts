@@ -28,6 +28,7 @@ interface Array<T> {
     Permutations(): T[][]
     Frequency(val: T): number
     Frequencies(sort?: boolean): [T, number][]
+    FrequencyMap(): Map<T, number>
     MaxFrequency(): number
     Random(): T
     Reverse(): T[]
@@ -44,6 +45,9 @@ interface Array<T> {
     toObject(): {}
     Run<U1, U2>(l1: (value: T) => U1, l2: (value: T) => U2): [U1, U2]
     Run<U1, U2, U3>(l1: (value: T) => U1, l2: (value: T) => U2, l3: (value: T) => U3): [U1, U2, U3]
+    Run<U1, U2, U3, U4>(l1: (value: T) => U1, l2: (value: T) => U2, l3: (value: T) => U3, l4: (value: T) => U4): [U1, U2, U3, U4]
+
+
 
     //Number
     Median(): T

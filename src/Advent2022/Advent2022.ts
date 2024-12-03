@@ -2405,7 +2405,7 @@ export function Day8_2() {
 export function Day7() {
     class Directory {
         constructor(public Name: string, public Parent: null | Directory = null) {}
-        Children: Array<Directory | File> = []
+        Children: (Directory | File)[] = []
 
         GetSize(): number {
             return this.Children.map(c => c.GetSize()).Sum()

@@ -165,9 +165,9 @@ function forEachRecursive(array: any[], times: number, action: (values: any[], i
         });
     }
 }
-Array.prototype.Run = function <U1, U2, U3>(...lambdas: ((value: any) => any)[]) {
+// @ts-ignore
+Array.prototype.Run = function (...lambdas: ((value: any) => any)[]) {
     return lambdas.map((l,i) => l(this[i] ?? this[0]))
-    // return [l1(this[0]),l2(this[1])]
 }
 Array.prototype.ReduceAccumulate = function(lambda: (prev: any, val: any, index: number, a: any[]) => number) {
     let acc = 0
@@ -263,6 +263,14 @@ Array.prototype.Frequencies = function<T>(sort = false) {
     const fs = (this as T[]).Uniques().map(u => [u, this.Frequency(u)] as [T, number])
     return sort ? fs.sort((a, b) => b[1]-a[1]) : fs
 }
+Array.prototype.FrequencyMap = function<T>() {
+    const m = new Map<T, number>()
+    for (const x of (this as T[])) {
+        m.Increment(x)
+    }
+    return m
+}
+
 Array.prototype.MaxFrequency = function<T>() {
     return (this as T[]).Uniques().reduce((max, u) => {
         const freq = this.Frequency(u)

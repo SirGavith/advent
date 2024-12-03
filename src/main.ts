@@ -5,7 +5,7 @@ import { Filer } from './Glib/Filer'
 import { Bright, Green, Reset, White } from './Glib/Console'
 
 Glib.init()
-const year = '2023'
+const year = '2024'
 const p = path.join(__dirname, '../src/Advent' + year)
 const recentFile = fs.readdirSync(p)
     .map(file => ({ name: file, timestamp: fs.statSync(path.join(p, file)).mtimeMs }))

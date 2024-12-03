@@ -7,7 +7,7 @@ Data.forEach(line => {
 
     let neighborsMap = m.get(name)
     if (neighborsMap === undefined) {
-        neighborsMap = [new Map<string, number>(), 1] as const
+        neighborsMap = [new Map<string, number>(), 1] as [Map<string, number>, number]
         m.set(name, neighborsMap)
     }
 
