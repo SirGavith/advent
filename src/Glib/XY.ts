@@ -129,7 +129,7 @@ export class XY {
         throw new Error('both got combos?')
     }
 
-    // Does not include this
+    /** Does not include this */
     Neighbours(includeDiags = false) {
         return includeDiags ? [
             this.plus(-1, -1),
@@ -147,7 +147,7 @@ export class XY {
             this.minus(0, 1)
         ]
     }
-    // Includes this
+    /** Includes this */ 
     Neighbourhood(includeDiags = false) {
         return includeDiags ? [
             this.plus(-1, -1),
@@ -167,6 +167,14 @@ export class XY {
             this.minus(0, 1)
         ]
     }
+    Diagonals() {
+        return [
+            this.plus(1, 1),
+            this.plus(-1, 1),
+            this.plus(-1, -1),
+            this.plus(1, -1),
+        ]
+    }
 
     static toString(a: XY[]): string {
         return a.map(xy => `(${xy.toString()})`).join(', ')
@@ -183,21 +191,32 @@ export class XY {
     static Zero = new XY
     static One = new XY(1)
 
-    static Up =     new XY(0,  1)
+    /** new XY(0, 1) */
+    static Up = new XY(0, 1)
+    /** new XY(0, -1) */
     static Down =   new XY(0, -1)
+    /** new XY(1, 0) */
     static Right =  new XY( 1, 0)
+    /** new XY(-1, 0) */
     static Left =   new XY(-1, 0)
 
+    /** new XY(-1, 1) */
     static South = new XY(0, 1)
+    /** new XY(0, -1) */
     static North = new XY(0, -1)
+    /** new XY(1, 0) */
     static East = new XY(1, 0)
+    /** new XY(-1, 0) */
     static West = new XY(-1, 0)
 
-
+    /** new XY(-1, 1) */
     static UpLeft = new XY(-1, 1)
+    /** new XY(1, 1) */
     static UpRight = new XY(1, 1)
+    /** new XY(-1, -1) */
     static DownLeft = new XY(-1, -1)
-    static DownRight = new XY(-1, -1)
+    /** new XY(1, -1) */
+    static DownRight = new XY(1, -1)
 
     Log() {
         console.log('XY:', this.X, this.Y)
@@ -350,6 +369,32 @@ export class Array2D<T> {
             }
         })
         return l
+    }
+
+    /** Returns an array of all top left to bottom right diagonals, starting wither on the top row or left side and going \ (in the 1,1 direction) */
+    Diagonals() {
+        const diags = []
+
+        for (let i = 0; i < this.Size.X; i++) {
+            const arr = []
+            for (let j = 0; j < this.Size.Y; j++) {
+                if (i + j < this.Size.Y) {
+                    arr.push(this.get(new XY(j, i + j))!)
+                }
+            }
+            diags.push(arr)
+        }
+        for (let i = 1; i < this.Size.X; i++) {
+            const arr = []
+            for (let j = 0; j < this.Size.Y; j++) {
+                if (i + j < this.Size.X) {
+                    arr.push(this.get(new XY(j + i, j))!)
+                }
+            }
+            diags.push(arr)
+        }
+
+        return diags
     }
 
     Log() {

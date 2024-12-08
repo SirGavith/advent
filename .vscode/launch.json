@@ -10,7 +10,7 @@
             ],
             "windows": {
                 "program": "${workspaceFolder}\\built\\main.js",
-                "console": "internalConsole",
+                "console": "externalTerminal",
             },
             "linux": {
                 "console": "integratedTerminal",
@@ -21,7 +21,7 @@
             ]
         },
         {
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "type": "node",
             "request": "launch",
             "name": "Launch Example Input",
@@ -30,7 +30,7 @@
             ],
             "windows": {
                 "program": "${workspaceFolder}\\built\\main.js",
-                "console": "internalConsole",
+                "console": "externalTerminal",
             },
             "linux": {
                 "console": "integratedTerminal",
