@@ -23,6 +23,7 @@ interface Array<T> {
     ReduceAccumulate(lambda: (prev: T, val: T, index: number, a: T[]) => number): number
     FillEmpty(value: T, pad?: number): Array<T>
     Count(predicate?: (value: T, index: number, array: T[]) => boolean): number
+    Accumulate(predicate: (value: T, index: number, array: T[]) => number): number
     IncrementOrCreate(index: number, value?: number): Array<T>
     // BinarySearch(search: (value: T, index: number) => boolean): T
     Permutations(): T[][]
@@ -76,6 +77,7 @@ interface Number {
     IsInteger(): boolean;
     /** @returns An array of the digits of the number */
     IntDigits(): number[];
+    NumDigits(): number
     InRangeEq(v1: number, v2: number): boolean;
     IsEven(): boolean;
     IsOdd(): boolean;

@@ -29,6 +29,8 @@ interface Array<T> {
     // Run(...lambdas: ((value: T) => void)[]): T[]
     FillEmpty(value: T, pad?: number): Array<T>
     Count(predicate?: (value: T, index: number, array: T[]) => boolean): number
+    Accumulate(predicate: (value: T, index: number, array: T[]) => number): number
+
     IncrementOrCreate (index: number, value?: number): Array<T>
     PushOrCreate2D(index: number, value: T): void
     // BinarySearch(search: (value: T, index: number) => boolean): T
@@ -59,10 +61,8 @@ interface Array<T> {
 }
 Array.prototype.Copy = function() {
     let a: any[] = []
-    this.forEach((val, i) => {
-        a[i] = val
-    })
-    a.length = this.length
+    for (let i = 0; i < this.length; i++)
+        a[i] = this[i]
     return a
 }
 Array.prototype.CopyFast = function() {
@@ -131,13 +131,14 @@ Array.prototype.Reduce = function<T, TT>(action: (prev: TT, val: T, index: numbe
 Array.prototype.Random = function() {
     return this[Math.floor((Math.random() * this.length))];
 }
+/** Returns a reversed copy of the list */
 Array.prototype.Reverse = function() {
     const a = this.CopyFast()
     a.reverse()
     return a;
 }
 Array.prototype.Sort = function (compareFn ?: ((a: any, b: any) => number) | undefined) {
-    const a = this.Copy()
+    const a = this.CopyFast()
     a.sort(compareFn)
     return a;
 }
@@ -220,6 +221,14 @@ Array.prototype.FillEmpty = function(fillValue: any, pad?: number) {
 Array.prototype.Count = function(predicate?: (value: any, index: number, array: any[]) => boolean) {
     return this.filter(predicate ?? (b => b)).length
 }
+Array.prototype.Accumulate = function (predicate: (value: any, index: number, array: any[]) => number) {
+    let count = 0
+    for (let i = 0; i < this.length; i++) {
+        count += predicate(this[i], i, this)
+    }
+    return count
+}
+
 Array.prototype.IncrementOrCreate = function(index: number, value = 1) {
     if (this[index]) this[index] += value
     else this[index] = value
@@ -326,9 +335,11 @@ interface Array<T> {//<T extends numericals> {
     toInt(radix?: number): number
 }
 Array.prototype.Sum = function() {
+    if (this.length === 0) return 0
     return this.reduce((p,c) => p+c)
 }
 Array.prototype.Product = function() {
+    if (this.length === 0) return 1
     return this.reduce((p, c) => p * c)
 }
 Array.prototype.toInt = function(radix = 10) {

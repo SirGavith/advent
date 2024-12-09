@@ -5,6 +5,7 @@ interface Number {
     IsInteger(): boolean
     /** @returns An array of the digits of the number */
     IntDigits(): number[]
+    NumDigits(): number
     InRangeEq(v1: number, v2: number): boolean
     IsEven(): boolean
     IsOdd(): boolean
@@ -14,6 +15,7 @@ interface Number {
     RoundFloating(epsilon?: number): number
     Log(): number
 }
+type num = number
 type numericals = number | bigint
 Number.prototype.plus = function (n: number) {
     return this.valueOf() + n
@@ -28,6 +30,10 @@ Number.prototype.IsInteger = function() {
 }
 Number.prototype.IntDigits = function() {
     return [...this.toString()].map(n => parseInt(n))
+}
+Number.prototype.NumDigits = function () {
+    const n = this.valueOf()
+    return n<100000?n<100?n<10?1:2:n<1000?3:n<10000?4:5:n<10000000?n<1000000?6:7:n<100000000?8:n<1000000000?9:10
 }
 Number.prototype.InRangeEq = function(v1, v2) {
     return this.valueOf() >= v1 && this.valueOf() <= v2   
