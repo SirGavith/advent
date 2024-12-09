@@ -78,6 +78,11 @@ export class XY {
         if (this === XY.Up) return XY.Right
         if (this === XY.Left) return XY.Up
         if (this === XY.Down) return XY.Left
+
+        if (this === XY.North) return XY.East
+        if (this === XY.East) return XY.South
+        if (this === XY.South) return XY.West
+        if (this === XY.West) return XY.North
         throw new Error('not implemented')
     }
     RotateCCW() {
@@ -85,6 +90,11 @@ export class XY {
         if (this === XY.Up) return XY.Left
         if (this === XY.Left) return XY.Down
         if (this === XY.Down) return XY.Right
+
+        if (this === XY.North) return XY.West
+        if (this === XY.West) return XY.South
+        if (this === XY.South) return XY.East
+        if (this === XY.East) return XY.North
         throw new Error('not implemented')
     }
 
@@ -284,15 +294,19 @@ export class Array2D<T> {
         })
     }
 
-    set(xy:XY, value: T | undefined) {
-        if (this.Checked && !xy.WithinArea(XY.Zero, this.Size.minus(1))) throw new Error('Array set out of bounds')
+    set(xy: XY, value: T | undefined) {
+        if (this.Checked && !this.XYWithinSize(xy)) throw new Error('Array set out of bounds')
         this.Array[xy.Y][xy.X] = value
         this.cols = []
     }
 
+    XYWithinSize(xy: XY) {
+        return xy.WithinArea(XY.Zero, this.Size.minus(1))
+    }
+
     Copy() {
         const arr = new Array2D<T>(this.Size)
-        arr.Array = this.Array.map(a => a.Copy())
+        arr.Array = this.Array.map(a => a.CopyFast())
         return arr
     }
 
@@ -317,6 +331,17 @@ export class Array2D<T> {
             }
         }
         return reducer
+    }
+
+    Count(lambda: (value: T | undefined, index: XY, array: this) => boolean): number {
+        let count = 0
+        for (let y = 0; y < this.Array.length; y++) {
+            for (let x = 0; x < this.Array[y]?.length; x++) {
+                let xy = new XY(x, y)
+                if (lambda(this.get(xy), xy, this)) count++
+            }
+        }
+        return count
     }
 
     every(lambda: (value: T | undefined, index: XY, array: this) => boolean): boolean {
