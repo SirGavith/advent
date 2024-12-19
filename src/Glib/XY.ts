@@ -300,6 +300,19 @@ export class Array2D<T> {
         this.cols = []
     }
 
+    /** Set xy to value if xy is within the array's bounds
+     * 
+     * Returns: `true` if successful
+     */
+    TrySet(xy: XY, value: T | undefined): boolean {
+        if (this.XYWithinSize(xy)) {
+            this.Array[xy.Y][xy.X] = value
+            this.cols = []
+            return true
+        }
+        return false
+    }
+
     XYWithinSize(xy: XY) {
         return xy.WithinArea(XY.Zero, this.Size.minus(1))
     }
@@ -522,7 +535,8 @@ export class Array2D<T> {
         const out = new Array2D<string>(size ?? new XY(arr[0].length, arr.length))
         arr.forEach((row, y) => {
             row.forEach((tile, x) => {
-                out.set(new XY(x, y), tile)
+                if (tile !== '.')
+                    out.set(new XY(x, y), tile)
             })
         })
         return out

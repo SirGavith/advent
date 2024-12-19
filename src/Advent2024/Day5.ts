@@ -13,17 +13,30 @@ m.SplitLines().map(l => l.split('|') as [string, string]).forEach(([p1, p2]) => 
 
 rules.Log()
 
-
-l.SplitLines().map(l => l.split(','))
+l.SplitLines().map(l => l.split(',')).Log()
 .filter(pages => {
-
-    for (let i = 0; i < pages.length - 1; i++) {
-        if (rules.has(pages[i])) {
-            for (let j = i + 1; j < pages.length; j++) {
-
+    for (let i = 0; i < pages.length; i++) {
+        for (let j = 0; j < i; j++) {
+            const r = rules.get(pages[i])
+            if (r?.has(pages[j])) return true
+        }
+    }
+    return false
+})
+.map(pages => {
+    for (let i = 0; i < pages.length; i++) {
+        for (let j = 0; j < i; j++) {
+            const r = rules.get(pages[i])
+            if (r?.has(pages[j])) {
+                const temp = pages[i]
+                pages[i] = pages[j]
+                pages[j] = temp
             }
         }
     }
+    return pages
 })
+.Log()
 .map(pages => pages[(pages.length - 1) / 2])
+.toIntArray()
 .Sum().Log()
