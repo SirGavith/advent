@@ -461,7 +461,7 @@ export class Array2D<T> {
     Entries() {
         const arr: [XY, T][] = []
         this.forEach((val, xy) => {
-            if (val) arr.push([xy, val])
+            if (val !== undefined) arr.push([xy, val])
         })
         return arr
     }
