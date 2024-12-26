@@ -11,7 +11,7 @@ const recentFile = fs.readdirSync(p)
     .map(file => ({ name: file, timestamp: fs.statSync(path.join(p, file)).mtimeMs }))
     .sort((a, b) => b.timestamp - a.timestamp)[0].name.slice(0, -3)
 
-const UseExample = process.argv[2] == 'example'
+export const UseExample = process.argv[2] == 'example'
 
 export const Data = Filer.ReadAllLines(UseExample ? './data/example.txt' : './data/input.txt'),
     DataFull = Filer.ReadFile(UseExample ? './data/example.txt' : './data/input.txt')

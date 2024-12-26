@@ -45,7 +45,7 @@ export class XY {
     divEQ(n: nXY, n2?: number) { this.set(this.div(n, n2))}
     mod(n: nXY, n2?: number) {
         const xy = XY.parseInput(n, n2)
-        return new XY(this.X % xy.X, this.Y % xy.Y)
+        return new XY(((this.X % xy.X) + xy.X) % xy.X, ((this.Y % xy.Y) + xy.Y) % xy.Y)
     }
     modEQ(n: nXY, n2?: number) { this.set(this.mod(n, n2))}
 
