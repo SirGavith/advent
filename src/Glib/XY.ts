@@ -229,7 +229,11 @@ export class XY {
     static DownRight = new XY(1, -1)
 
     Log() {
-        console.log('XY:', this.X, this.Y)
+        if (this === XY.North) console.log('North')
+        else if (this === XY.South) console.log('South')
+        else if (this === XY.West) console.log('West')
+        else if (this === XY.East) console.log('East')
+        else console.log('XY:', this.X, this.Y)
         return this
     }
 
