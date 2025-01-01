@@ -1,5 +1,10 @@
-Register A: 729
-Register B: 0
-Register C: 0
+r, wr, b, g, bwu, rb, gb, br
 
-Program: 0,1,5,4,3,0
+brwrr
+bggr
+gbbr
+rrbgbr
+ubwu
+bwurrg
+brgr
+bbrgwb
