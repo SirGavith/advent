@@ -242,6 +242,15 @@ export class XY {
         if (this.EQ(XY.South)) return 'S'
         if (this.EQ(XY.East)) return 'E'
         if (this.EQ(XY.West)) return 'W'
+        throw new Error(`XY ${this} is not a unit xy`)
+    }
+
+    toArrowString() {
+        if (this.EQ(XY.North)) return '^'
+        if (this.EQ(XY.South)) return 'v'
+        if (this.EQ(XY.East)) return '>'
+        if (this.EQ(XY.West)) return '<'
+        throw new Error(`XY ${this} is not a unit xy`)
     }
 
     static ArrayMinMax(arr: XY[]): [XY, XY] {

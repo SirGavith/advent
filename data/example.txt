@@ -1,10 +1,5 @@
-r, wr, b, g, bwu, rb, gb, br
-
-brwrr
-bggr
-gbbr
-rrbgbr
-ubwu
-bwurrg
-brgr
-bbrgwb
+029A
+980A
+179A
+456A
+379A
